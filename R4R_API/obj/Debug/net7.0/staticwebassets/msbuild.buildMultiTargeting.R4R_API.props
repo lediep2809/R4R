@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\R4R_API.props" />
+</Project>
