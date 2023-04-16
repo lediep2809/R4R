@@ -81,48 +81,67 @@ namespace AuthenticationAndAuthorization.Controllers
         [HttpPost("login")]
         public ActionResult<User> Login(UserLogin request)
         {
-            if (_context.Users.Where(e => e.Email == request.Email).FirstOrDefault() == null )
+            var checkUser = _context.Users.Where(e => e.Email == request.Email.Trim()).FirstOrDefault();
+
+            if (checkUser == null )
             {
                 return BadRequest("User not found.");
             }
 
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(request.Password.Trim(), checkUser.Password))
             {
                 return BadRequest("Wrong password.");
             }
 
-            string token = CreateToken(user);
+            var token = CreateToken(checkUser);
 
             return Ok(token);
         }
 
-        private string CreateToken(User user)
+        private UserModel CreateToken(User user)
         {
+            UserModel _userData = new UserModel();
             Role role = _context.Roles.Where(e=>e.Id==user.Roleid).FirstOrDefault();
 
-                        List<Claim> claims = new List<Claim> {
-            
-            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+               List<Claim> claims = new List<Claim> {
+                new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                 new Claim(ClaimTypes.Name, user.Fullname),
                 new Claim(ClaimTypes.Role, role!=null?role.Code:""),
                 new Claim("RoleName",role!=null? role.Name:""),
                 new Claim("Email", user.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value!));
+            _userData.UserMessage = "Login Success";
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            /*          var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                          _configuration.GetSection("AppSettings:Token").Value!));
 
+                      var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+                      var token = new JwtSecurityToken(
+                              claims: claims,
+                              expires: DateTime.Now.AddDays(1),
+                              signingCredentials: creds
+                          );*/
+
+            /*            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            */
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1),
-                    signingCredentials: creds
-                );
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.UtcNow.AddMinutes(10),
+                signingCredentials: signIn);
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            _userData.Email = user.Email;
+            _userData.Role = role != null ? role.Name : "";
+            _userData.FullName = user.Fullname;
+            _userData.phone = user.Phone;
+            _userData.AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return jwt;
+            return _userData;
         }
 
 
