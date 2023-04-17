@@ -2,6 +2,7 @@
 {
     public class DefaultString
     {
+        const int maxPageSize = 10;
         public const string ROLE_2 = "ROLE_2";
 
         public class ERROR_STRING

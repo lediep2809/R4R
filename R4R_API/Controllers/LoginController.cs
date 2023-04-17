@@ -10,6 +10,10 @@ using R4R_API.Services;
 using R4R_API.Constant;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using Microsoft.Net.Http.Headers;
 
 namespace AuthenticationAndAuthorization.Controllers
 {
@@ -21,27 +25,21 @@ namespace AuthenticationAndAuthorization.Controllers
 
         public static User user = new User();
         private readonly IConfiguration _configuration;
-        private readonly IUserService _userService;
 
-        public LoginController(IConfiguration configuration, IUserService userService)
+        public LoginController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _userService = userService;
         }
 
-        [HttpGet, Authorize]
-        public ActionResult<string> GetMyName()
-        {
-            return Ok(_userService.GetMyName());
 
-            //var userName = User?.Identity?.Name;
-            //var roleClaims = User?.FindAll(ClaimTypes.Role);
-            //var roles = roleClaims?.Select(c => c.Value).ToList();
-            //var roles2 = User?.Claims
-            //    .Where(c => c.Type == ClaimTypes.Role)
-            //    .Select(c => c.Value)
-            //    .ToList();
-            //return Ok(new { userName, roles, roles2 });
+        [HttpGet("test")]
+        [Authorize(Roles = DefaultString.ROLE_2)]
+        public async Task<ActionResult> GetMyName()
+        {
+            var accessToken = Request.Headers[HeaderNames.Authorization];
+            var students = await _context.Users.ToListAsync();
+            var test = _context.Users.ToList();
+            return Ok(students);
         }
 
 
@@ -103,29 +101,18 @@ namespace AuthenticationAndAuthorization.Controllers
             UserModel _userData = new UserModel();
             Role role = _context.Roles.Where(e=>e.Id==user.Roleid).FirstOrDefault();
 
-               List<Claim> claims = new List<Claim> {
+            string roles = string.Join(",", role != null ? role.Code : "");
+
+            List<Claim> claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                 new Claim(ClaimTypes.Name, user.Fullname),
-                new Claim(ClaimTypes.Role, role!=null?role.Code:""),
+                new Claim(ClaimTypes.Role, roles),
                 new Claim("RoleName",role!=null? role.Name:""),
                 new Claim("Email", user.Email)
             };
 
             _userData.UserMessage = "Login Success";
 
-            /*          var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                          _configuration.GetSection("AppSettings:Token").Value!));
-
-                      var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                      var token = new JwtSecurityToken(
-                              claims: claims,
-                              expires: DateTime.Now.AddDays(1),
-                              signingCredentials: creds
-                          );*/
-
-            /*            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            */
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
