@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "2UoIvyFNjNf090NRWziu/Bxcmmsznr7dJq0OhzdxuPWdJz2Ga9I4sPCL7LLXVxP+UbqrjIINoOmKdHBcuC1/zg==",
-  "success": true,
+  "dgSpecHash": "FWMS0da7haLcJAeB+ld3nkrtLa7dkzTBoGlMFnBGpqd5Bopr+nL7CY9l+tTnT9finG0zorEFeecus80y0UBvbg==",
+  "success": false,
   "projectFilePath": "C:\\Users\\HLC_2021\\source\\repos\\R4R_API\\R4R_API\\R4R_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HLC_2021\\.nuget\\packages\\bcrypt.net\\0.1.0\\bcrypt.net.0.1.0.nupkg.sha512",
@@ -11,9 +11,9 @@
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.5\\microsoft.entityframeworkcore.6.0.5.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.5\\microsoft.entityframeworkcore.abstractions.6.0.5.nupkg.sha512",
-    "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.5\\microsoft.entityframeworkcore.analyzers.6.0.5.nupkg.sha512",
+    "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.0\\microsoft.entityframeworkcore.analyzers.6.0.0.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.0\\microsoft.entityframeworkcore.design.6.0.0.nupkg.sha512",
-    "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.4\\microsoft.entityframeworkcore.inmemory.6.0.4.nupkg.sha512",
+    "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.0\\microsoft.entityframeworkcore.inmemory.6.0.0.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.4\\microsoft.entityframeworkcore.relational.6.0.4.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.0\\microsoft.entityframeworkcore.tools.6.0.0.nupkg.sha512",
     "C:\\Users\\HLC_2021\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
@@ -62,6 +62,15 @@
       "warningLevel": 1,
       "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
       "libraryId": "BCrypt.Net",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.EntityFrameworkCore.Analyzers from 6.0.5 to 6.0.0. Reference the package directly from the project to select a different version. \r\n R4R_API -> Microsoft.EntityFrameworkCore 6.0.5 -> Microsoft.EntityFrameworkCore.Analyzers (>= 6.0.5) \r\n R4R_API -> Microsoft.EntityFrameworkCore.Analyzers (>= 6.0.0)",
+      "libraryId": "Microsoft.EntityFrameworkCore.Analyzers",
       "targetGraphs": [
         "net6.0"
       ]
