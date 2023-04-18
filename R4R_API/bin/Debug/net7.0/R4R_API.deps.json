@@ -10,9 +10,9 @@
         "dependencies": {
           "BCrypt.Net": "0.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.5",
-          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "7.0.4",
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.4",
           "Microsoft.AspNetCore.OpenApi": "7.0.4",
-          "Microsoft.EntityFrameworkCore.InMemory": "7.0.4",
+          "Microsoft.EntityFrameworkCore.InMemory": "6.0.4",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.5",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.3",
           "Swashbuckle.AspNetCore": "6.4.0",
@@ -50,14 +50,14 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/7.0.4": {
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/6.0.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "7.0.5"
         },
         "runtime": {
-          "lib/net7.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {
-            "assemblyVersion": "7.0.4.0",
-            "fileVersion": "7.0.423.11903"
+          "lib/net6.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {
+            "assemblyVersion": "6.0.4.0",
+            "fileVersion": "6.0.422.17204"
           }
         }
       },
@@ -111,14 +111,14 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.InMemory/7.0.4": {
+      "Microsoft.EntityFrameworkCore.InMemory/6.0.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.5"
         },
         "runtime": {
           "lib/net6.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
-            "assemblyVersion": "7.0.4.0",
-            "fileVersion": "7.0.423.11504"
+            "assemblyVersion": "6.0.4.0",
+            "fileVersion": "6.0.422.16106"
           }
         }
       },
@@ -451,12 +451,12 @@
       "path": "microsoft.aspnetcore.authentication.jwtbearer/7.0.5",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/7.0.4": {
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/6.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fWSKKaDyxP5OvIhGvSBDGsMRPCFC4mW+Fd63bILrzg/tEjkCpcKj245NOzl+fpsRcQP6OhM2vj9KhdtPu89x+g==",
-      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/7.0.4",
-      "hashPath": "microsoft.aspnetcore.diagnostics.entityframeworkcore.7.0.4.nupkg.sha512"
+      "sha512": "sha512-mBOx8W+lrM5Sx09dczoEu4L2PB12pibpWFxyZ9x4FLHthqgJZJvFeEyQqqK1oWRcMKuXUMJOYKaKkBqeNbH0eA==",
+      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/6.0.4",
+      "hashPath": "microsoft.aspnetcore.diagnostics.entityframeworkcore.6.0.4.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/7.0.4": {
       "type": "package",
@@ -500,12 +500,12 @@
       "path": "microsoft.entityframeworkcore.design/7.0.5",
       "hashPath": "microsoft.entityframeworkcore.design.7.0.5.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.InMemory/7.0.4": {
+    "Microsoft.EntityFrameworkCore.InMemory/6.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-enWK5KFD21mq6z1qs5i2PsGQbfud5hLF9erQvPCSC0HCSTQUuOqIxccUEbxu4QRrdqpjwVofZs+yNSM5qoe6bg==",
-      "path": "microsoft.entityframeworkcore.inmemory/7.0.4",
-      "hashPath": "microsoft.entityframeworkcore.inmemory.7.0.4.nupkg.sha512"
+      "sha512": "sha512-yGwrb5Z6siJxvHhLv8yfouVkNV/YlcFrxaH1x9zap4/LtnctCIozLkWtgJHovDSYHVZm0yAkFtOMgl9rVm9Xsg==",
+      "path": "microsoft.entityframeworkcore.inmemory/6.0.4",
+      "hashPath": "microsoft.entityframeworkcore.inmemory.6.0.4.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/7.0.5": {
       "type": "package",
