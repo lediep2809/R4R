@@ -33,7 +33,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
 
-        [HttpGet("test")]
+        [HttpGet("searchRooms")]
 /*        [Authorize(Roles = DefaultString.ROLE_2)]
 */        public async Task<ActionResult> GetAll(Paging paging)
         {
