@@ -2104,11 +2104,11 @@
     "net6.0": [
       "BCrypt.Net >= 0.1.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.16",
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.403",
-      "Microsoft.EntityFrameworkCore >= 6.0.403",
-      "Microsoft.EntityFrameworkCore.Analyzers >= 6.0.403",
-      "Microsoft.EntityFrameworkCore.InMemory >= 6.0.403",
-      "Microsoft.EntityFrameworkCore.Tools >= 6.0.403",
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 7.0.0",
+      "Microsoft.EntityFrameworkCore >= 7.0.0",
+      "Microsoft.EntityFrameworkCore.Analyzers >= 7.0.0",
+      "Microsoft.EntityFrameworkCore.InMemory >= 7.0.0",
+      "Microsoft.EntityFrameworkCore.Tools >= 7.0.0",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 6.0.0",
       "Swashbuckle.AspNetCore >= 6.0.0",
       "Swashbuckle.AspNetCore.Filters >= 7.0.6",
@@ -2164,25 +2164,25 @@
           },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[6.0.403, )"
+            "version": "[7.0.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[6.0.403, )"
+            "version": "[7.0.0, )"
           },
           "Microsoft.EntityFrameworkCore.Analyzers": {
             "target": "Package",
-            "version": "[6.0.403, )"
+            "version": "[7.0.0, )"
           },
           "Microsoft.EntityFrameworkCore.InMemory": {
             "target": "Package",
-            "version": "[6.0.403, )"
+            "version": "[7.0.0, )"
           },
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[6.0.403, )"
+            "version": "[7.0.0, )"
           },
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
@@ -2225,56 +2225,6 @@
     }
   },
   "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore (>= 6.0.403) but Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 6.0.403 was not found. An approximate best match of Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 7.0.0 was resolved.",
-      "libraryId": "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore (>= 6.0.403) but Microsoft.EntityFrameworkCore 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.Analyzers (>= 6.0.403) but Microsoft.EntityFrameworkCore.Analyzers 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.Analyzers 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.Analyzers",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.InMemory (>= 6.0.403) but Microsoft.EntityFrameworkCore.InMemory 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.InMemory 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.InMemory",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.Tools (>= 6.0.403) but Microsoft.EntityFrameworkCore.Tools 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.Tools 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.Tools",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

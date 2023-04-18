@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SQzRrL6CWy6vH4z2Km2S6oBmXnGV2hUCfOEbnUwclMW/C4MMzqL+ngYZpqg5YdfAGEu0J334QVHMe6mpT8eVYg==",
+  "dgSpecHash": "8e6mc9krJ6Fdl8oVfKWwpmYn+9SQz/tCTPDHXbag0XjcdmmWer/Jb6V0rHIJ7BRpKKK0ExVeIONcpYPBsm61PQ==",
   "success": false,
   "projectFilePath": "C:\\Users\\HLC_2021\\source\\repos\\R4R_API\\R4R_API\\R4R_API.csproj",
   "expectedPackageFiles": [
@@ -56,56 +56,6 @@
     "C:\\Users\\HLC_2021\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore (>= 6.0.403) but Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 6.0.403 was not found. An approximate best match of Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 7.0.0 was resolved.",
-      "libraryId": "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore (>= 6.0.403) but Microsoft.EntityFrameworkCore 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.Analyzers (>= 6.0.403) but Microsoft.EntityFrameworkCore.Analyzers 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.Analyzers 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.Analyzers",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.InMemory (>= 6.0.403) but Microsoft.EntityFrameworkCore.InMemory 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.InMemory 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.InMemory",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "R4R_API depends on Microsoft.EntityFrameworkCore.Tools (>= 6.0.403) but Microsoft.EntityFrameworkCore.Tools 6.0.403 was not found. An approximate best match of Microsoft.EntityFrameworkCore.Tools 7.0.0 was resolved.",
-      "libraryId": "Microsoft.EntityFrameworkCore.Tools",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",
