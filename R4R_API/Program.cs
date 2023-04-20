@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<R4rContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Ef_Postgres_Db")));
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:Ef_Postgres_Db"]));
 builder.Services.AddScoped<RoomsService, RoomsService>();
 
 builder.Services.AddSwaggerGen(options =>

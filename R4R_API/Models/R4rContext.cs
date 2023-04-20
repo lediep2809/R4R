@@ -22,7 +22,7 @@ public partial class R4rContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseNpgsql("Host=containers-us-west-12.railway.app;Database=railway;Username=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ");
+    => optionsBuilder.UseNpgsql("Host=containers-us-west-12.railway.app;Port=7353;Database=railway;Username=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ");
 
 protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
