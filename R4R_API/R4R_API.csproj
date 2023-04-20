@@ -15,6 +15,7 @@
           <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         </PropertyGroup>
      -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     <Exec Command="npm ci"      Condition="'$(RestorePackagesWithLockFile)' == 'true'" />
     <Exec Command="npm install" Condition="'$(RestorePackagesWithLockFile)' != 'true'" />
 
