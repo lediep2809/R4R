@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<R4rContext>(options =>
-    options.UseNpgsql(builder.Configuration["ConnectionStrings:Ef_Postgres_Db"]));
+    options.UseNpgsql("Server=containers-us-west-12.railway.app;Database=railway;Port=7353;User Id=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ");
 builder.Services.AddScoped<RoomsService, RoomsService>();
 
 builder.Services.AddSwaggerGen(options =>
@@ -43,7 +43,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateAudience = false,
         ValidateIssuer = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration.GetSection("Jwt:Key").Value!))
+            "Yh2k7QSu4l8CZg5p6X3Pna9L0Miy4D3Bvt0JVr87UcOj69Kqw5R2Nmf4FWs03Hdx"))
     };
 });
 builder.Services.AddControllers();

@@ -102,7 +102,7 @@ namespace AuthenticationAndAuthorization.Controllers
             string roles = string.Join(",", role != null ? role.Code : "");
 
             List<Claim> claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                new Claim(JwtRegisteredClaimNames.Sub, "JWTServiceAccessToken"),
                 new Claim(ClaimTypes.Name, user.Fullname),
                 new Claim(ClaimTypes.Role, roles),
                 new Claim("RoleName",role!=null? role.Name:""),
@@ -111,11 +111,11 @@ namespace AuthenticationAndAuthorization.Controllers
 
             _userData.UserMessage = "Login Success";
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Yh2k7QSu4l8CZg5p6X3Pna9L0Miy4D3Bvt0JVr87UcOj69Kqw5R2Nmf4FWs03Hdx"));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
+                _configuration["JWTAuthenticationServer"],
+                _configuration["JWTServicePostmanClient"],
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(10),
                 signingCredentials: signIn);
