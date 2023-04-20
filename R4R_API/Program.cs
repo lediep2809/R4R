@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<R4rContext>(options =>
-    options.UseNpgsql("Server=containers-us-west-12.railway.app;Database=railway;Port=7353;User Id=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ");
+    options.UseNpgsql("Server=containers-us-west-12.railway.app;Database=railway;Port=7353;User Id=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ"));
 builder.Services.AddScoped<RoomsService, RoomsService>();
 
 builder.Services.AddSwaggerGen(options =>
