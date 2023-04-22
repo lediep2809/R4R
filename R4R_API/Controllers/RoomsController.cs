@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Microsoft.Net.Http.Headers;
 using System.Net;
+using System.Linq;
+using System.IdentityModel.Tokens;
 
 namespace AuthenticationAndAuthorization.Controllers
 {
@@ -24,6 +26,8 @@ namespace AuthenticationAndAuthorization.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly RoomsService _roomsService;
+        private readonly ILogger _logger;
+
 
         public RoomsController(IConfiguration configuration, RoomsService roomsService)
         {
@@ -44,14 +48,15 @@ namespace AuthenticationAndAuthorization.Controllers
         [Authorize]
         public async Task<ActionResult> saveRoom(SaveNewRoom newRoom)
         {
+           
+            var re = Request;
+            var headers = re.Headers;
+            string tokenString = headers.Authorization;
+            var jwtEncodedString = tokenString.Substring(7); // trim 'Bearer ' from the start since its just a prefix for the token string
+            var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
+            var email = token.Claims.First(c => c.Type == "Email").Value;
+            
 
-            var stream = "[TokenType]";
-            var handler = new JwtSecurityTokenHandler().ReadJwtToken;
-            /*var jsonToken = handler.(stream);*/
-/*            var tokenS = jsonToken as JwtSecurityToken;
-*/
-/*            var email = tokenS.Claims.First(claim => claim.Type == "Email").Value;
-*/
             Room room = new Room();
             Guid myuuid = Guid.NewGuid();
             room.Id = myuuid.ToString();
@@ -68,12 +73,12 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Otherprice = newRoom.Otherprice;
             room.Houseowner = newRoom.Houseowner;
             room.Ownerphone = newRoom.Ownerphone;
-/*            room.Createdby = email;
-*/            room.imgRoom = newRoom.imgRoom;
+            room.Createdby = email;
+            room.imgRoom = newRoom.imgRoom;
             room.Createddate = new DateTime();
             room.Status = 0;
 
-            return Ok();
+            return Ok(_roomsService.saveRoom(room));
         }
 
 

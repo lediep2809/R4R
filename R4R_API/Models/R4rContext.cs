@@ -103,6 +103,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.Waterprice)
                 .HasMaxLength(255)
                 .HasColumnName("waterprice");
+            entity.Property(e => e.imgRoom).HasColumnName("imgroom");
         });
 
         modelBuilder.Entity<User>(entity =>
