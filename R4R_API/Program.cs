@@ -77,9 +77,6 @@ app.MapControllers();
 app.UseStatusCodePages();
 
 //app cors
-app.UseCors(builder => builder
-     .AllowAnyOrigin()
-     .AllowAnyMethod()
-     .AllowAnyHeader());
+app.UseCors("corsapp");
 
 app.Run();
