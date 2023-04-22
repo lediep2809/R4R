@@ -5,7 +5,7 @@ namespace R4R_API.Models;
 
 public partial class Room
 {
-    public int Id { get; set; }
+    public string? Id { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -36,6 +36,8 @@ public partial class Room
     public string? Createdby { get; set; }
 
     public string? Activeby { get; set; }
+
+    public string? imgRoom { get; set; }
 
     public DateTime Createddate { get; set; }
 

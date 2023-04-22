@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace R4R_API.Services
 {
@@ -32,6 +34,15 @@ namespace R4R_API.Services
 
             return a;
         }
-    
-}
+
+        public string GetIdTokenExpiry(string idtoken)
+        {
+
+            var token = new JwtSecurityToken(jwtEncodedString: idtoken);
+            string expiry = token.Claims.First(c => c.Type == "Email").Value;
+            return expiry;
+        }
+
+
+    }
 }

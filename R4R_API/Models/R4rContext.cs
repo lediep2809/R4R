@@ -133,6 +133,24 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.Status).HasColumnName("status");
         });
 
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("role_pkey");
+
+            entity.ToTable("category");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .HasColumnName("code");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .HasColumnName("status");
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
