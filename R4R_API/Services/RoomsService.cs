@@ -50,6 +50,21 @@ namespace R4R_API.Services
             }
         }
 
+        public Room updateRoom(Room room)
+        {
+            try
+            {
+                _Db.Rooms.Update(room);
+                _Db.SaveChanges();
+
+                return room;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public string GetIdTokenExpiry(string idtoken)
         {
 

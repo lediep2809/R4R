@@ -43,19 +43,90 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(_roomsService.GetAll(paging));
         }
 
+        [HttpPost("editRooms")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public async Task<ActionResult> editRooms(Room room)
+        {
+            var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+
+            var re = Request;
+            var headers = re.Headers;
+            string tokenString = headers.Authorization;
+            var jwtEncodedString = tokenString.Substring(7); // trim 'Bearer ' from the start since its just a prefix for the token string
+            var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
+            var emailEdit = token.Claims.First(c => c.Type == "Email").Value;
+
+            if (roomCheck == null)
+            {
+                return BadRequest("Không tìm thấy phòng");
+            }
+             roomCheck.Name = room.Name;
+             roomCheck.Address = room.Address;
+             roomCheck.Category = room.Category;
+             roomCheck.Area = room.Area;
+             roomCheck.Capacity = room.Capacity;
+             roomCheck.Description = room.Description;
+             roomCheck.Price = room.Price;
+             roomCheck.Deposit = room.Deposit;
+             roomCheck.Electricprice = room.Electricprice;
+             roomCheck.Waterprice = room.Waterprice;
+             roomCheck.Otherprice = room.Otherprice;
+             roomCheck.Houseowner = room.Houseowner;
+             roomCheck.Ownerphone = room.Ownerphone;
+             roomCheck.imgRoom = room.imgRoom;
+             roomCheck.Status = room.Status;
+
+            var roomEdit = _roomsService.updateRoom(roomCheck);
+            if (roomEdit == null)
+            {
+                return BadRequest("Không tìm thấy phòng");
+            }
+
+            return Ok(roomEdit);
+        }
+
+        [HttpPost("activeRooms")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public async Task<ActionResult> activeRooms(Room room)
+        {
+            var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+
+            var re = Request;
+            var headers = re.Headers;
+            string tokenString = headers.Authorization;
+            var jwtEncodedString = tokenString.Substring(7); // trim 'Bearer ' from the start since its just a prefix for the token string
+            var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
+            var emailEdit = token.Claims.First(c => c.Type == "Email").Value;
+
+            if (roomCheck == null)
+            {
+                return BadRequest("Không tìm thấy phòng");
+            }
+
+            roomCheck.Activeby = emailEdit;
+            roomCheck.Activedate = new DateTime();
+            roomCheck.Status = room.Status;
+
+            var roomEdit = _roomsService.updateRoom(roomCheck);
+            if (roomEdit == null)
+            {
+                return BadRequest("Không tìm thấy phòng");
+            }
+
+            return Ok(roomEdit);
+        }
+
 
         [HttpPost("saveNewRoom")]
         [Authorize]
         public async Task<ActionResult> saveRoom(SaveNewRoom newRoom)
         {
-           
             var re = Request;
             var headers = re.Headers;
             string tokenString = headers.Authorization;
             var jwtEncodedString = tokenString.Substring(7); // trim 'Bearer ' from the start since its just a prefix for the token string
             var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
             var email = token.Claims.First(c => c.Type == "Email").Value;
-            
 
             Room room = new Room();
             Guid myuuid = Guid.NewGuid();
@@ -78,9 +149,13 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Createddate = new DateTime();
             room.Status = 0;
 
-            return Ok(_roomsService.saveRoom(room));
+            var roomNew = _roomsService.saveRoom(room);
+            if (roomNew == null)
+            {
+                return BadRequest("Tạo mới phòng thất bại");
+            }
+            return Ok(roomNew);
         }
-
 
     }
 }
