@@ -85,9 +85,9 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(roomEdit);
         }
 
-        [HttpPost("activeRooms")]
+        [HttpPost("activeRoom")]
         [Authorize(Roles = DefaultString.ROLE_1)]
-        public async Task<ActionResult> activeRooms(Room room)
+        public async Task<ActionResult> activeRoom(activeRoom room)
         {
             var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
 
