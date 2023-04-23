@@ -22,10 +22,23 @@ builder.Services.AddDbContext<R4rContext>(options =>
 builder.Services.AddScoped<RoomsService, RoomsService>();
 //services cors
 
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+/*builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("https://r4r.up.railway.app").AllowAnyMethod().AllowAnyHeader();
 }));
+*/
+// ConfigureServices
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AnyOrigin", builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod();
+    });
+});
+
+
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -77,6 +90,8 @@ app.MapControllers();
 app.UseStatusCodePages();
 
 //app cors
-app.UseCors("corsapp");
+// Configure
+app.UseCors("AnyOrigin");
+/*app.UseCors("corsapp");*/
 
 app.Run();
