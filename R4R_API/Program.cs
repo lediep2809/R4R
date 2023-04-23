@@ -24,7 +24,7 @@ builder.Services.AddScoped<RoomsService, RoomsService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("https://r4r.up.railway.app/").AllowAnyMethod().AllowAnyHeader();
+    builder.WithOrigins("https://r4r.up.railway.app").AllowAnyMethod().AllowAnyHeader();
 }));
 
 builder.Services.AddSwaggerGen(options =>

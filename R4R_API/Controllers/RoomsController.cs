@@ -44,7 +44,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("editRooms")]
-        [Authorize(Roles = DefaultString.ROLE_1)]
+        [Authorize]
         public async Task<ActionResult> editRooms(Room room)
         {
             var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
@@ -56,7 +56,7 @@ namespace AuthenticationAndAuthorization.Controllers
             var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
             var emailEdit = token.Claims.First(c => c.Type == "Email").Value;
 
-            if (roomCheck == null)
+            if (roomCheck == null && emailEdit.Equals(roomCheck.Createdby))
             {
                 return BadRequest("Không tìm thấy phòng");
             }
