@@ -39,6 +39,10 @@ public partial class Room
 
     public string? imgRoom { get; set; }
 
+    public string? noSex { get; set; }
+    
+    public string? utilities { get; set; }
+    
     public DateTime Createddate { get; set; }
 
     public DateTime? Activedate { get; set; }

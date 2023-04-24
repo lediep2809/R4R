@@ -26,26 +26,71 @@ namespace AuthenticationAndAuthorization.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly RoomsService _roomsService;
+        private readonly CategoryService _categoryService;
         private readonly ILogger _logger;
 
 
-        public RoomsController(IConfiguration configuration, RoomsService roomsService)
+        public RoomsController(IConfiguration configuration, RoomsService roomsService,CategoryService categoryService)
         {
             _configuration = configuration;
             _roomsService = roomsService;
+            _categoryService = categoryService;
         }
 
 
         [HttpPost("searchRooms")]
-/*        [Authorize(Roles = DefaultString.ROLE_2)]
-*/        public async Task<ActionResult> GetAll(Paging paging)
+        public async Task<ActionResult> GetAll(Paging paging)
         {
-            return Ok(_roomsService.GetAll(paging));
+            var getRoom = _roomsService.GetAll(paging);
+            List<getAllRoom> allRooms ;
+            
+            foreach (var room in getRoom)
+            {
+                getAllRoom allRoom = new getAllRoom();
+                allRoom.room = room;
+            }
+            return Ok();
+        }
+
+        [HttpPost("getCategory")]
+        public async Task<ActionResult> GetCategory()
+        {
+            var data = await _context.Categories.ToListAsync();
+            return Ok(data);
+        }
+
+        [HttpPost("newCategory")]
+        public async Task<ActionResult> newCategory(NewCategory category)
+        {
+            Category data = new Category();
+            Guid myuuid = Guid.NewGuid();
+            data.Id = myuuid.ToString();
+            data.Code = category.Code;
+            data.Name = category.Name;
+            data.Status = "1";
+            _categoryService.saveCategory(data);
+            return Ok(category);
+        }
+
+        [HttpPost("editCategory")]
+        public async Task<ActionResult> editCategory(editCategory category)
+        {
+            var check =  _categoryService.getbycode(category.Code);
+
+            if (check == null )
+            {
+                return BadRequest("Không tìm thấy Loại");
+            }
+
+            check.Name = category.Name;
+            check.Status = "1".Equals(category.Status)? "1" : "0";
+            _categoryService.updateCategory(check);
+            return Ok(category);
         }
 
         [HttpPost("editRooms")]
         [Authorize]
-        public async Task<ActionResult> editRooms(Room room)
+        public async Task<ActionResult> editRooms(EditRoom room)
         {
             var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
 
@@ -60,22 +105,24 @@ namespace AuthenticationAndAuthorization.Controllers
             {
                 return BadRequest("Không tìm thấy phòng");
             }
-             roomCheck.Name = room.Name;
-             roomCheck.Address = room.Address;
-             roomCheck.Category = room.Category;
-             roomCheck.Area = room.Area;
-             roomCheck.Capacity = room.Capacity;
-             roomCheck.Description = room.Description;
-             roomCheck.Price = room.Price;
-             roomCheck.Deposit = room.Deposit;
-             roomCheck.Electricprice = room.Electricprice;
-             roomCheck.Waterprice = room.Waterprice;
-             roomCheck.Otherprice = room.Otherprice;
-             roomCheck.Houseowner = room.Houseowner;
-             roomCheck.Ownerphone = room.Ownerphone;
-             roomCheck.imgRoom = room.imgRoom;
-             roomCheck.Status = room.Status;
-
+            roomCheck.Name = room.Name;
+            roomCheck.Address = room.Address;
+            roomCheck.Category = room.Category;
+            roomCheck.Area = room.Area;
+            roomCheck.Capacity = room.Capacity;
+            roomCheck.Description = room.Description;
+            roomCheck.Price = room.Price;
+            roomCheck.Deposit = room.Deposit;
+            roomCheck.Electricprice = room.Electricprice;
+            roomCheck.Waterprice = room.Waterprice;
+            roomCheck.Otherprice = room.Otherprice;
+            roomCheck.Houseowner = room.Houseowner;
+            roomCheck.Ownerphone = room.Ownerphone;
+            var img = string.Join(",", room.imgRoom);
+            roomCheck.imgRoom = img;
+            roomCheck.Status = room.Status;
+            roomCheck.noSex = room.noSex;
+            roomCheck.utilities = room.utilities;
             var roomEdit = _roomsService.updateRoom(roomCheck);
             if (roomEdit == null)
             {
@@ -145,7 +192,10 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Houseowner = newRoom.Houseowner;
             room.Ownerphone = newRoom.Ownerphone;
             room.Createdby = email;
-            room.imgRoom = newRoom.imgRoom;
+            var img = string.Join(",", newRoom.imgRoom);
+            room.imgRoom = img;
+            room.noSex = room.noSex;
+            room.utilities = room.utilities;
             room.Createddate = new DateTime();
             room.Status = 0;
 

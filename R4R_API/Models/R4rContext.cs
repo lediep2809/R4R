@@ -21,6 +21,8 @@ public partial class R4rContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     private string host = Environment.GetEnvironmentVariable("PGHOST");
 
 
@@ -103,6 +105,12 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.Waterprice)
                 .HasMaxLength(255)
                 .HasColumnName("waterprice");
+            entity.Property(e => e.noSex)
+                .HasMaxLength(255)
+                .HasColumnName("noSex");
+            entity.Property(e => e.utilities)
+                .HasMaxLength(255)
+                .HasColumnName("utilities");
             entity.Property(e => e.imgRoom).HasColumnName("imgroom");
         });
 

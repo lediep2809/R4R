@@ -65,14 +65,6 @@ namespace R4R_API.Services
             }
         }
 
-        public string GetIdTokenExpiry(string idtoken)
-        {
-
-            var token = new JwtSecurityToken(jwtEncodedString: idtoken);
-            string expiry = token.Claims.First(c => c.Type == "Email").Value;
-            return expiry;
-        }
-
 
     }
 }

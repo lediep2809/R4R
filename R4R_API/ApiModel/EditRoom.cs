@@ -1,7 +1,9 @@
 ﻿namespace R4R_API.ApiModel
 {
-    public class SaveNewRoom
+    public class EditRoom
     {
+
+        public string? Id { get; set; }
 
         public string Name { get; set; } = null!;
 
@@ -29,10 +31,20 @@
 
         public string? Ownerphone { get; set; }
 
+        public string? Createdby { get; set; }
+
+        public string? Activeby { get; set; }
+
         public string[] imgRoom { get; set; }
 
         public string? noSex { get; set; }
 
         public string? utilities { get; set; }
+
+        public DateTime Createddate { get; set; }
+
+        public DateTime? Activedate { get; set; }
+
+        public int? Status { get; set; }
     }
 }
