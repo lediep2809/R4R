@@ -51,6 +51,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("newCategory")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
         public async Task<ActionResult> newCategory(NewCategory category)
         {
             Category data = new Category();
@@ -64,6 +65,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("editCategory")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
         public async Task<ActionResult> editCategory(editCategory category)
         {
             var check =  _categoryService.getbycode(category.Code);

@@ -30,37 +30,11 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
 
-        [HttpPost("register")]
-        public ActionResult<User> Register(UserRegisterModel request)
+        [HttpPost("getAllUser")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public ActionResult<User> getAllUser()
         {
-            Role role = _context.Roles.Where(e => e.Code == DefaultString.ROLE_2).FirstOrDefault();
-
-            User userCheck = _context.Users.Where(e => e.Email == request.Email).FirstOrDefault();
-
-            if (userCheck != null)
-            {
-                return BadRequest(DefaultString.ERROR_STRING.DUP_EMAIL);
-            }
-
-            string passwordHash
-                = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            Guid myuuid = Guid.NewGuid();
-            string myuuidAsString = myuuid.ToString();
-            user.Id = myuuidAsString;
-            user.Email = request.Email;
-            user.Password = passwordHash;
-            user.Fullname = request.FullName;
-            user.Createddate = new DateTime();
-            user.Phone = request.phone;
-            if (role != null)
-            {
-                user.Roleid = role.Id;
-
-            }
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return Ok(user);
+            return Ok(_context.Users.ToList());
         }
 
     }
