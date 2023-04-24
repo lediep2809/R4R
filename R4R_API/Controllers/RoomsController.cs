@@ -36,7 +36,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
 
-        [HttpGet("searchRooms")]
+        [HttpPost("searchRooms")]
 /*        [Authorize(Roles = DefaultString.ROLE_2)]
 */        public async Task<ActionResult> GetAll(Paging paging)
         {
