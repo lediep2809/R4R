@@ -107,7 +107,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasColumnName("waterprice");
             entity.Property(e => e.noSex)
                 .HasMaxLength(255)
-                .HasColumnName("noSex");
+                .HasColumnName("nosex");
             entity.Property(e => e.utilities)
                 .HasMaxLength(255)
                 .HasColumnName("utilities");

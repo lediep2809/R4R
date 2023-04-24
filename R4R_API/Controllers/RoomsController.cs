@@ -30,11 +30,10 @@ namespace AuthenticationAndAuthorization.Controllers
         private readonly ILogger _logger;
 
 
-        public RoomsController(IConfiguration configuration, RoomsService roomsService,CategoryService categoryService)
+        public RoomsController(IConfiguration configuration, RoomsService roomsService)
         {
             _configuration = configuration;
             _roomsService = roomsService;
-            _categoryService = categoryService;
         }
 
 
