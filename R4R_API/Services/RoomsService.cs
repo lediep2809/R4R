@@ -25,9 +25,21 @@ namespace R4R_API.Services
             int pageNum = paging.PageNumber <=0 ? 1 : paging.PageNumber;
             int pageSize = paging.PageSize > 10 || paging.PageSize <= 0 ? 10 : paging.PageSize;
             var search =paging.SearchQuery.ToUpper().Trim();
+            var price = paging.Price.ToUpper().Trim();
+            var category = paging.Category.ToUpper().Trim();
+            var utilities = paging.utilities.ToUpper().Trim();
+            var noSex = paging.noSex.ToUpper().Trim();
+            var status = paging.status.ToUpper().Trim();
 
             var a = _Db.Rooms
-                .Where(p => p.Name.ToUpper().Trim().Contains(search) || p.Address.ToUpper().Trim().Contains(search) || p.Deposit.ToUpper().Trim().Contains(search))
+                .Where(p => (p.Name.ToUpper().Trim().Contains(search) 
+                || p.Address.ToUpper().Trim().Contains(search) 
+                || p.Deposit.ToUpper().Trim().Contains(search)) 
+                && p.Category.Equals(category)
+                && p.utilities.Contains(utilities)
+                && p.noSex.Contains(noSex)
+                && p.Status.Equals(status)
+                )
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
