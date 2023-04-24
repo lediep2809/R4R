@@ -41,15 +41,7 @@ namespace AuthenticationAndAuthorization.Controllers
         [HttpPost("searchRooms")]
         public async Task<ActionResult> GetAll(Paging paging)
         {
-            var getRoom = _roomsService.GetAll(paging);
-            List<getAllRoom> allRooms ;
-            
-            foreach (var room in getRoom)
-            {
-                getAllRoom allRoom = new getAllRoom();
-                allRoom.room = room;
-            }
-            return Ok();
+            return Ok(_roomsService.GetAll(paging));
         }
 
         [HttpPost("getCategory")]

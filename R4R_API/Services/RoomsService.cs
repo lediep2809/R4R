@@ -20,7 +20,7 @@ namespace R4R_API.Services
             _Db = Db;
         }
 
-        public List<Room> GetAll(Paging paging)
+        public List<getAllRoom> GetAll(Paging paging)
         {
             int pageNum = paging.PageNumber <=0 ? 1 : paging.PageNumber;
             int pageSize = paging.PageSize > 10 || paging.PageSize <= 0 ? 10 : paging.PageSize;
@@ -32,7 +32,20 @@ namespace R4R_API.Services
                 .Take(pageSize)
                 .ToList();
 
-            return a;
+            List<getAllRoom> allRooms = new List<getAllRoom>();
+
+            foreach (var room in a)
+            {
+                getAllRoom allRoom = new getAllRoom();
+                allRoom.room = room;
+
+                string[] foos = room.imgRoom.Split(",");
+                allRoom.ImgRoom = foos;
+                allRooms.Add(allRoom);
+            }
+
+
+            return allRooms;
         }
 
         public Room saveRoom(Room room)
