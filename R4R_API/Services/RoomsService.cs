@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Xml.Linq;
 
 namespace R4R_API.Services
 {
@@ -24,12 +25,36 @@ namespace R4R_API.Services
         {
             int pageNum = paging.PageNumber <=0 ? 1 : paging.PageNumber;
             int pageSize = paging.PageSize > 10 || paging.PageSize <= 0 ? 10 : paging.PageSize;
-            var search =paging.SearchQuery.ToUpper().Trim();
-            var price = paging.Price.ToUpper().Trim();
-            var category = paging.Category.ToUpper().Trim();
-            var utilities = paging.utilities.ToUpper().Trim();
+            var search =paging.SearchQuery.Trim();
+            var price = paging.Price.ToLower().Trim();
+            var category = paging.Category.Trim();
+            var utilities = paging.utilities.Trim();
             var noSex = paging.noSex.ToUpper().Trim();
             var status = paging.status.ToUpper().Trim();
+            int? va = null;
+            var to = va;
+            var from = va;
+
+            if (price.Equals("first"))
+            {
+                to = 1000000;
+                from = 5000000;
+            }
+            else if (price.Equals("second"))
+            {
+                to = 6000000;
+                from = 10000000;
+            }
+            else if (price.Equals("third"))
+            {
+                to = 11000000;
+                from = 15000000;
+            }
+
+            var test = _Db.Rooms
+                    .FromSqlRaw($"select * from room as u where ( ('{to}' is null or '{from}' is null ) or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .OrderBy(s => s.Status)
+                    .ToList();
 
             var a = _Db.Rooms
                 .Where(p => (p.Name.ToUpper().Trim().Contains(search) 
@@ -39,6 +64,7 @@ namespace R4R_API.Services
                 && p.utilities.Contains(utilities)
                 && p.noSex.Contains(noSex)
                 && p.Status.Equals(status)
+               
                 )
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
@@ -46,7 +72,7 @@ namespace R4R_API.Services
 
             List<getAllRoom> allRooms = new List<getAllRoom>();
 
-            foreach (var room in a)
+            foreach (var room in test)
             {
                 getAllRoom allRoom = new getAllRoom();
                 allRoom.room = room;
