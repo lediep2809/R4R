@@ -22,23 +22,17 @@ builder.Services.AddDbContext<R4rContext>(options =>
 builder.Services.AddScoped<RoomsService, RoomsService>();
 //services cors
 
-/*builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("https://r4r.up.railway.app").AllowAnyMethod().AllowAnyHeader();
-}));
-*/
-// ConfigureServices
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AnyOrigin", builder =>
-    {
-        builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod();
-    });
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("https://r4r.up.railway.app/",
+                                              "http://r4r.up.railway.app/");
+                      });
 });
-
-
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -91,7 +85,6 @@ app.UseStatusCodePages();
 
 //app cors
 // Configure
-app.UseCors("AnyOrigin");
-/*app.UseCors("corsapp");*/
+app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();

@@ -64,7 +64,7 @@ namespace R4R_API.Services
                 && p.utilities.Contains(utilities)
                 && p.noSex.Contains(noSex)
                 && p.Status.Equals(status)
-               
+   
                 )
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
