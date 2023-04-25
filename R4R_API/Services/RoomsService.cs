@@ -32,8 +32,8 @@ namespace R4R_API.Services
             var noSex = paging.noSex.ToUpper().Trim();
             var status = paging.status.ToUpper().Trim();
             int? va = null;
-            var to = va;
-            var from = va;
+            var to = 0;
+            var from = 0;
 
             if (price.Equals("first"))
             {
@@ -52,7 +52,7 @@ namespace R4R_API.Services
             }
 
             var test = _Db.Rooms
-                    .FromSqlRaw($"select * from room as u where ( ('{to}' = '' or '{from}' = '' ) or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .FromSqlRaw($"select * from room as u where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
                     .OrderBy(s => s.Status)
                     .ToList();
 
