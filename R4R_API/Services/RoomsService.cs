@@ -28,7 +28,8 @@ namespace R4R_API.Services
             var search =paging.SearchQuery.ToUpper().Trim();
             var price = paging.Price.ToLower().Trim();
             var category = paging.Category.Trim();
-            var utilities = paging.utilities.Trim();
+            var util = string.Join(",", paging.utilities);
+            var utilities = util;
             var noSex = paging.noSex.ToUpper().Trim();
             var status = paging.status.ToUpper().Trim();
             int? va = null;
@@ -59,8 +60,7 @@ namespace R4R_API.Services
                         && (category == "" || p.Category.Equals(category))
                         && (utilities == "" || p.utilities.Contains(utilities))
                         && (noSex == "" || p.noSex.Contains(noSex))
-                        && (status =="" || p.Status.Equals(status))
-                        )
+                        && (status =="" || p.Status.Equals(status)) )
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize)
                     .OrderBy(s => s.Status)

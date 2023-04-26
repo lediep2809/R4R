@@ -117,7 +117,7 @@ namespace AuthenticationAndAuthorization.Controllers
                 _configuration["JWTAuthenticationServer"],
                 _configuration["JWTServicePostmanClient"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddMinutes(1000),
                 signingCredentials: signIn);
 
             _userData.Email = user.Email;
