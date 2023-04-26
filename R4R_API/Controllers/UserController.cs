@@ -38,7 +38,7 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("editUser")]
-        [Authorize(Roles = DefaultString.ROLE_1)]
+        [Authorize()]
         public async Task<ActionResult> editUser(editUser user)
         {
             var checkUser = _context.Users.Where(e => e.Email == user.Email).FirstOrDefault();
@@ -58,6 +58,23 @@ namespace AuthenticationAndAuthorization.Controllers
             _context.SaveChanges();
 
             return Ok(checkUser);
+        }
+
+        [HttpPost("deleteUser")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public async Task<ActionResult> deleteUser(deleteUser user)
+        {
+            var Check = _context.Users.Where(e => e.Id == user.Id).FirstOrDefault();
+
+            if (Check == null)
+            {
+                return BadRequest("Không tìm thấy User");
+            }
+
+            _context.Users.Remove(Check);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
