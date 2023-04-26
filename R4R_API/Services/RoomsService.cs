@@ -58,7 +58,7 @@ namespace R4R_API.Services
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
                         && (category == "" || p.Category.Equals(category))
-                        && (utilities == "" || p.utilities.Contains(utilities))
+                        && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status =="" || p.Status.Equals(status)) )
                     .Skip((pageNum - 1) * pageSize)
