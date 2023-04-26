@@ -56,7 +56,10 @@ namespace R4R_API.Services
                     .Where(p => (p.Name.ToUpper().Trim().Contains(search)
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
-                       
+                        && (category == "" || p.Category.Equals(category))
+                        && (utilities == "" || p.utilities.Contains(utilities))
+                        && (noSex == "" || p.noSex.Contains(noSex))
+                        && (status =="" || p.Status.Equals(status))
                         )
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize)
