@@ -33,6 +33,6 @@
 
         public string? noSex { get; set; }
 
-        public string? utilities { get; set; }
+        public string[] utilities { get; set; }
     }
 }

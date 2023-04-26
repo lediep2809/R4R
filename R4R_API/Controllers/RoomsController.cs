@@ -219,7 +219,9 @@ namespace AuthenticationAndAuthorization.Controllers
             var img = string.Join(",", newRoom.imgRoom);
             room.imgRoom = img;
             room.noSex = room.noSex;
-            room.utilities = room.utilities;
+
+            var util = string.Join(",", newRoom.utilities);
+            room.utilities = util;
             room.Createddate = new DateTime();
             room.Status = 0;
 

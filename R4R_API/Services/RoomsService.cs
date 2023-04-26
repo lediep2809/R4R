@@ -78,7 +78,9 @@ namespace R4R_API.Services
                 allRoom.room = room;
 
                 string[] foos = room.imgRoom.Split(",");
+                string[] ulti = room.imgRoom.Split(",");
                 allRoom.ImgRoom = foos;
+                allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
             }
 

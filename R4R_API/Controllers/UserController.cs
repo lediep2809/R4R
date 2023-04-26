@@ -47,14 +47,17 @@ namespace AuthenticationAndAuthorization.Controllers
             {
                 return BadRequest("Không tìm thấy user");
             }
-
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
             checkUser.Fullname = user.Fullname;
+            checkUser.Phone= user.Phone;
+            checkUser.Password = passwordHash;
+            checkUser.Status = user.Status;
+            checkUser.Roleid = user.Roleid;
 
-
-     /*       _context.Rooms.Remove(roomCheck);*/
+            _context.Users.Update(checkUser);
             _context.SaveChanges();
 
-            return Ok();
+            return Ok(checkUser);
         }
     }
 }
