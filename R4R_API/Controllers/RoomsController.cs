@@ -146,7 +146,8 @@ namespace AuthenticationAndAuthorization.Controllers
             roomCheck.imgRoom = img;
             roomCheck.Status = room.Status;
             roomCheck.noSex = room.noSex;
-            roomCheck.utilities = room.utilities;
+            var util = string.Join(",", room.utilities);
+            roomCheck.utilities = util;
             var roomEdit = _roomsService.updateRoom(roomCheck);
             if (roomEdit == null)
             {
