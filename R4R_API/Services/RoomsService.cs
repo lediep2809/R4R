@@ -31,7 +31,11 @@ namespace R4R_API.Services
             var util = string.Join(",", paging.utilities);
             var utilities = util;
             var noSex = paging.noSex.ToUpper().Trim();
-            var status = paging.status.ToUpper().Trim();
+            var status = paging.status;
+            int s = 0;
+
+            Int32.TryParse(status, out s);
+
             int? va = null;
             var to = 0;
             var from = 0;
@@ -60,7 +64,7 @@ namespace R4R_API.Services
                         && (category == "" || p.Category.Equals(category))
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
-                        && (status =="" || p.Status.Equals(status)) )
+                        && (status =="" || p.Status.Equals(s)) )
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize)
                     .OrderBy(s => s.Status)
