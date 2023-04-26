@@ -25,7 +25,7 @@ namespace R4R_API.Services
         {
             int pageNum = paging.PageNumber <=0 ? 1 : paging.PageNumber;
             int pageSize = paging.PageSize > 10 || paging.PageSize <= 0 ? 10 : paging.PageSize;
-            var search =paging.SearchQuery.Trim();
+            var search =paging.SearchQuery.ToUpper().Trim();
             var price = paging.Price.ToLower().Trim();
             var category = paging.Category.Trim();
             var utilities = paging.utilities.Trim();
@@ -53,22 +53,15 @@ namespace R4R_API.Services
 
             var test = _Db.Rooms
                     .FromSqlRaw($"select * from room as u where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .Where(p => (p.Name.ToUpper().Trim().Contains(search)
+                        || p.Address.ToUpper().Trim().Contains(search)
+                        || p.Area.ToUpper().Trim().Contains(search))
+                       
+                        )
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize)
                     .OrderBy(s => s.Status)
                     .ToList();
-
-            var a = _Db.Rooms
-                .Where(p => (p.Name.ToUpper().Trim().Contains(search) 
-                || p.Address.ToUpper().Trim().Contains(search) 
-                || p.Deposit.ToUpper().Trim().Contains(search)) 
-                && p.Category.Equals(category)
-                && p.utilities.Contains(utilities)
-                && p.noSex.Contains(noSex)
-                && p.Status.Equals(status)
-   
-                )
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
 
             List<getAllRoom> allRooms = new List<getAllRoom>();
 
