@@ -60,7 +60,11 @@ namespace AuthenticationAndAuthorization.Controllers
             data.Code = category.Code;
             data.Name = category.Name;
             data.Status = "1";
-            _categoryService.saveCategory(data);
+
+            _context.Categories.Add(data);
+            _context.SaveChanges();
+
+          /*  _categoryService.saveCategory(data);*/
             return Ok(category);
         }
 
@@ -77,8 +81,35 @@ namespace AuthenticationAndAuthorization.Controllers
 
             check.Name = category.Name;
             check.Status = "1".Equals(category.Status)? "1" : "0";
-            _categoryService.updateCategory(check);
-            return Ok(category);
+            try
+            {
+                _context.Categories.Update(check);
+                _context.SaveChanges();
+
+                return Ok(category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Không tìm thấy Loại");
+            }
+            
+        }
+
+        [HttpPost("deleteRoom")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public async Task<ActionResult> deleteRoom(activeRoom room)
+        {
+            var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+
+            if (roomCheck == null)
+            {
+                return BadRequest("Không tìm thấy phòng");
+            }
+
+            _context.Rooms.Remove(roomCheck);
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost("editRooms")]

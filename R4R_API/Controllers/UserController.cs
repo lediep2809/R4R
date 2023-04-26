@@ -37,5 +37,24 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(_context.Users.ToList());
         }
 
+        [HttpPost("editUser")]
+        [Authorize(Roles = DefaultString.ROLE_1)]
+        public async Task<ActionResult> editUser(editUser user)
+        {
+            var checkUser = _context.Users.Where(e => e.Email == user.Email).FirstOrDefault();
+
+            if (checkUser == null)
+            {
+                return BadRequest("Không tìm thấy user");
+            }
+
+            checkUser.Fullname = user.Fullname;
+
+
+     /*       _context.Rooms.Remove(roomCheck);*/
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
