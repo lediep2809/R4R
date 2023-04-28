@@ -142,7 +142,7 @@ namespace AuthenticationAndAuthorization.Controllers
             roomCheck.Otherprice = room.Otherprice;
             roomCheck.Houseowner = room.Houseowner;
             roomCheck.Ownerphone = room.Ownerphone;
-            var img = string.Join(",", room.imgRoom);
+            var img = string.Join("(,)", room.imgRoom);
             roomCheck.imgRoom = img;
             roomCheck.Status = room.Status;
             roomCheck.noSex = room.noSex;
@@ -217,7 +217,7 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Houseowner = newRoom.Houseowner;
             room.Ownerphone = newRoom.Ownerphone;
             room.Createdby = email;
-            var img = string.Join(",", newRoom.imgRoom);
+            var img = string.Join("(,)", newRoom.imgRoom);
             room.imgRoom = img;
             room.noSex = room.noSex;
 
