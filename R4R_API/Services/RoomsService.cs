@@ -24,7 +24,7 @@ namespace R4R_API.Services
         public List<getAllRoom> GetAll(Paging paging)
         {
             int pageNum = paging.PageNumber <=0 ? 1 : paging.PageNumber;
-            int pageSize = paging.PageSize > 10 || paging.PageSize <= 0 ? 10 : paging.PageSize;
+            int pageSize =  paging.PageSize <= 0 ? 10 : paging.PageSize;
             var search =paging.SearchQuery.ToUpper().Trim();
             var price = paging.Price.ToLower().Trim();
             var category = paging.Category.Trim();
@@ -65,8 +65,8 @@ namespace R4R_API.Services
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status =="" || p.Status.Equals(s)) )
-                    .Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize)
+                    /*.Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize)*/
                     .OrderBy(s => s.Status)
                     .ToList();
 
