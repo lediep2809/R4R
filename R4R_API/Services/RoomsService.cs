@@ -77,13 +77,15 @@ namespace R4R_API.Services
                 getAllRoom allRoom = new getAllRoom();
                 allRoom.room = room;
 
-/*                string[] foos = room.imgRoom.Split(",data:").Select(s =>
-                {
-                    return string.Join("data:", s);
-                }).ToArray(); ;*/
-                string[] foos = room.imgRoom.Split("(,)");
+                var imgRooms = _Db.ImgRooms
+                .Where(m => m.idroom.Equals(room.Id))
+                .Select(u => u.imgbase64)
+                .ToList();
+
+               /* string[] foos = room.imgRoom.Split("(,)");*/
+
                 string[] ulti = room.utilities.Split(",");
-                allRoom.ImgRoom = foos;
+                allRoom.ImgRoom = imgRooms ;
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
             }
@@ -151,13 +153,15 @@ namespace R4R_API.Services
                 getAllRoom allRoom = new getAllRoom();
                 allRoom.room = room;
 
-                /*                string[] foos = room.imgRoom.Split(",data:").Select(s =>
-                                {
-                                    return string.Join("data:", s);
-                                }).ToArray(); ;*/
-                string[] foos = room.imgRoom.Split("(,)");
+                var imgRooms = _Db.ImgRooms
+                 .Where(m => m.idroom.Equals(room.Id))
+                 .Select(u => u.imgbase64)
+                 .ToList();
+
+
+                allRoom.ImgRoom = imgRooms;
+
                 string[] ulti = room.utilities.Split(",");
-                allRoom.ImgRoom = foos;
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
             }
@@ -166,11 +170,55 @@ namespace R4R_API.Services
             return allRooms;
         }
 
-        public Room saveRoom(Room room)
+        public Room saveRoom(Room room, string[] img)
         {
             try
             {
+                foreach (var i in img)
+                {
+                    imgRoom ro = new imgRoom();
+                    Category data = new Category();
+                    Guid myuuid = Guid.NewGuid();
+                    ro.Id = myuuid.ToString();
+                    ro.idroom = room.Id;
+                    ro.imgbase64 = i;
+                    _Db.ImgRooms.Add(ro);
+                }
+
                 _Db.Rooms.Add(room);
+                _Db.SaveChanges();
+
+                return room;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Room updateRoom(Room room, string[] img)
+        {
+            try
+            {
+                
+                var imgRooms = _Db.ImgRooms
+                    .Where(m => m.idroom.Equals(room.Id))
+                    .ToList();
+                _Db.ImgRooms.RemoveRange(imgRooms);
+                _Db.SaveChanges();
+
+                foreach (var i in img)
+                {
+                    imgRoom ro = new imgRoom();
+                    Category data = new Category();
+                    Guid myuuid = Guid.NewGuid();
+                    ro.Id = myuuid.ToString();
+                    ro.idroom = room.Id;
+                    ro.imgbase64 = i;
+                    _Db.ImgRooms.Add(ro);
+                }
+                
+                _Db.Rooms.Update(room);
                 _Db.SaveChanges();
 
                 return room;

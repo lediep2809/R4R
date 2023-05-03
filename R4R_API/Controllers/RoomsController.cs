@@ -43,6 +43,20 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(_roomsService.GetAll(paging));
         }
 
+        [HttpPost("getRoomsByUser")]
+        [Authorize]
+        public async Task<ActionResult> getRoomsByUser(Paging paging)
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string tokenString = headers.Authorization;
+            var jwtEncodedString = tokenString.Substring(7); // trim 'Bearer ' from the start since its just a prefix for the token string
+            var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
+            var email = token.Claims.First(c => c.Type == "Email").Value;
+
+            return Ok(_roomsService.getRoomsByUser(paging,email));
+        }
+
         [HttpPost("getCategory")]
         public async Task<ActionResult> GetCategory()
         {
@@ -142,13 +156,13 @@ namespace AuthenticationAndAuthorization.Controllers
             roomCheck.Otherprice = room.Otherprice;
             roomCheck.Houseowner = room.Houseowner;
             roomCheck.Ownerphone = room.Ownerphone;
-            var img = string.Join("(,)", room.imgRoom);
-            roomCheck.imgRoom = img;
+/*            var img = string.Join("(,)", room.imgRoom);
+            roomCheck.imgRoom = img;*/
             roomCheck.Status = room.Status;
             roomCheck.noSex = room.noSex;
             var util = string.Join(",", room.utilities);
             roomCheck.utilities = util;
-            var roomEdit = _roomsService.updateRoom(roomCheck);
+            var roomEdit = _roomsService.updateRoom(roomCheck, room.imgRoom);
             if (roomEdit == null)
             {
                 return BadRequest("Không tìm thấy phòng");
@@ -217,8 +231,8 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Houseowner = newRoom.Houseowner;
             room.Ownerphone = newRoom.Ownerphone;
             room.Createdby = email;
-            var img = string.Join("(,)", newRoom.imgRoom);
-            room.imgRoom = img;
+/*            var img = string.Join("(,)", newRoom.imgRoom);
+            room.imgRoom = img;*/
             room.noSex = room.noSex;
 
             var util = string.Join(",", newRoom.utilities);
@@ -226,7 +240,7 @@ namespace AuthenticationAndAuthorization.Controllers
             room.Createddate = new DateTime();
             room.Status = 0;
 
-            var roomNew = _roomsService.saveRoom(room);
+            var roomNew = _roomsService.saveRoom(room, newRoom.imgRoom);
             if (roomNew == null)
             {
                 return BadRequest("Tạo mới phòng thất bại");

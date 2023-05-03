@@ -8,7 +8,7 @@ namespace R4R_API.Models
 
         public Room room { get; set; } = null!;
 
-        public string[] ImgRoom { get; set; } = null!;
+        public List<string>? ImgRoom { get; set; }
 
         public string[] Utilities { get; set; } = null!;
     }

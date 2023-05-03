@@ -23,6 +23,8 @@ public partial class R4rContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<imgRoom> ImgRooms { get; set; }
+
     private string host = Environment.GetEnvironmentVariable("PGHOST");
 
 
@@ -160,6 +162,18 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasColumnName("status");
         });
 
+        modelBuilder.Entity<imgRoom>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("role_pkey");
+
+            entity.ToTable("imgRoom");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.idroom)
+                .HasColumnName("idroom");
+            entity.Property(e => e.imgbase64)
+                .HasColumnName("imgbase64");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 
