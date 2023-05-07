@@ -29,8 +29,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.WithOrigins("https://r4r.up.railway.app/",
-                                              "http://r4r.up.railway.app/");
+                          builder.WithOrigins("https://motor.up.railway.app").AllowAnyHeader()
+                                                  .AllowAnyMethod();
                       });
 });
 
@@ -84,7 +84,11 @@ app.MapControllers();
 app.UseStatusCodePages();
 
 //app cors
-// Configure
-app.UseCors(MyAllowSpecificOrigins);
+// global cors policy
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin 
+    .AllowCredentials());
 
 app.Run();
