@@ -67,7 +67,7 @@ namespace R4R_API.Services
                         && (status =="" || p.Status.Equals(s)) )
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize)
-                    .OrderBy(s => s.Status)
+                    .OrderByDescending(s => s.Status)
                     .ToList();
 
             List<getAllRoom> allRooms = new List<getAllRoom>();
@@ -143,7 +143,7 @@ namespace R4R_API.Services
                         && (email == "" || p.Createdby.Equals(email)))
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize)
-                    .OrderBy(s => s.Createdby)
+                    .OrderByDescending(s => s.Createdby)
                     .ToList();
 
             List<getAllRoom> allRooms = new List<getAllRoom>();
