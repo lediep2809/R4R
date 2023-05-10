@@ -65,8 +65,8 @@ namespace R4R_API.Services
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status =="" || p.Status.Equals(s)) )
-                    /*.Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize)*/
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize)
                     .OrderBy(s => s.Status)
                     .ToList();
 
@@ -141,8 +141,8 @@ namespace R4R_API.Services
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status == "" || p.Status.Equals(s))
                         && (email == "" || p.Createdby.Equals(email)))
-                    /*.Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize)*/
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize)
                     .OrderBy(s => s.Createdby)
                     .ToList();
 
