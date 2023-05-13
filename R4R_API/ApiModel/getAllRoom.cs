@@ -11,6 +11,8 @@ namespace R4R_API.Models
         public List<string>? ImgRoom { get; set; }
 
         public string[] Utilities { get; set; } = null!;
+
+        public int total { get; set; }
     }
 }
 

@@ -69,6 +69,15 @@ namespace R4R_API.Services
                     .Take(pageSize)
                     .OrderByDescending(s => s.Status)
                     .ToList();
+            var total = _Db.Rooms
+                    .FromSqlRaw($"select * from room as u where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .Where(p => (p.Name.ToUpper().Trim().Contains(search)
+                        || p.Address.ToUpper().Trim().Contains(search)
+                        || p.Area.ToUpper().Trim().Contains(search))
+                        && (category == "" || p.Category.Equals(category))
+                        && (utilities == "" || p.utilities.Contains(util))
+                        && (noSex == "" || p.noSex.Contains(noSex))
+                        && (status == "" || p.Status.Equals(s))).Count();
 
             List<getAllRoom> allRooms = new List<getAllRoom>();
 
@@ -88,6 +97,7 @@ namespace R4R_API.Services
                 allRoom.ImgRoom = imgRooms ;
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
+                allRoom.total = total;
             }
 
 
@@ -146,6 +156,17 @@ namespace R4R_API.Services
                     .OrderByDescending(s => s.Createdby)
                     .ToList();
 
+            var total = _Db.Rooms
+                    .FromSqlRaw($"select * from room as u where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .Where(p => (p.Name.ToUpper().Trim().Contains(search)
+                        || p.Address.ToUpper().Trim().Contains(search)
+                        || p.Area.ToUpper().Trim().Contains(search))
+                        && (category == "" || p.Category.Equals(category))
+                        && (utilities == "" || p.utilities.Contains(util))
+                        && (noSex == "" || p.noSex.Contains(noSex))
+                        && (status == "" || p.Status.Equals(s))
+                        && (email == "" || p.Createdby.Equals(email))).Count();
+
             List<getAllRoom> allRooms = new List<getAllRoom>();
 
             foreach (var room in test)
@@ -164,6 +185,7 @@ namespace R4R_API.Services
                 string[] ulti = room.utilities.Split(",");
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
+                allRoom.total = total;
             }
 
 
