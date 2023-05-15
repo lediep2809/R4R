@@ -10,6 +10,8 @@ public class editUser
 
     public string Password { get; set; } = null!;
 
+    public string? NewPassword { get; set; }
+
     public string Fullname { get; set; } = null!;
 
     public int? Status { get; set; }

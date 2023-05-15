@@ -38,6 +38,15 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(_context.Users.ToList());
         }
 
+        [HttpPost("getUserToken")]
+        [Authorize]
+        public ActionResult<User> getUserToken()
+        {
+            var email = _userService.getTokenValue(Request, DefaultString.Email);
+            var user = _context.Users.Where(e => e.Email.Equals(email)).FirstOrDefault();
+            return Ok(user);
+        }
+
         [HttpPost("editUser")]
         [Authorize()]
         public async Task<ActionResult> editUser(editUser user)
@@ -45,22 +54,61 @@ namespace AuthenticationAndAuthorization.Controllers
             var email = _userService.getTokenValue(Request, DefaultString.Email); 
                 var role = _userService.getTokenValue(Request, DefaultString.RoleName); 
             var checkUser = _context.Users.Where(e => e.Email.Equals(user.Email)).FirstOrDefault();
-
-            if (checkUser == null || email != checkUser.Email)
+ 
+            if (checkUser == null)
             {
                 return BadRequest("Không tìm thấy user");
             }
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            checkUser.Fullname = user.Fullname;
-            checkUser.Phone= user.Phone;
-            checkUser.Password = passwordHash;
-            checkUser.Status = user.Status;
-            checkUser.Roleid = user.Roleid;
+            string? passwordHash = null;
+            if (user.NewPassword != null)
+            {
+                passwordHash = BCrypt.Net.BCrypt.HashPassword(user.NewPassword);
+            }
+             if (DefaultString.ADMIN.Equals(role) && email.Equals(checkUser.Email))
+            {
+                if (passwordHash != null && !BCrypt.Net.BCrypt.Verify(user.Password.Trim(), checkUser.Password))
+                {
+                    return BadRequest("Mật khẩu cũ không khớp");
+                }
+                else
+                {
+                    checkUser.Password = passwordHash;
+                }
+                checkUser.Fullname = user.Fullname;
+                checkUser.Phone = user.Phone;
+                checkUser.Status = user.Status;
+                checkUser.Roleid = user.Roleid;
+                _context.Users.Update(checkUser);
+                _context.SaveChanges();
+                return Ok(checkUser);
+            }
+            else if(DefaultString.ADMIN.Equals(role))
+            {
+                checkUser.Status = user.Status;
+                checkUser.Roleid = user.Roleid;
+                _context.Users.Update(checkUser);
+                _context.SaveChanges();
+                return Ok(checkUser);
+            }
+            else if (email.Equals(checkUser.Email))
+            {
+                if(passwordHash != null && !BCrypt.Net.BCrypt.Verify(user.Password.Trim(), checkUser.Password))
+                {
+                    return BadRequest("Mật khẩu cũ không khớp");
+                }
+                else
+                {
+                    checkUser.Password = passwordHash;
+                }
+                checkUser.Fullname = user.Fullname;
+                checkUser.Phone = user.Phone;
+                checkUser.Status = user.Status;
+                _context.Users.Update(checkUser);
+                _context.SaveChanges();
+                return Ok(checkUser);
+            }
 
-            _context.Users.Update(checkUser);
-            _context.SaveChanges();
-
-            return Ok(checkUser);
+            return BadRequest("Bạn không có quyền");
         }
 
 
