@@ -44,7 +44,7 @@ namespace AuthenticationAndAuthorization.Controllers
         {
             var email = _userService.getTokenValue(Request, DefaultString.Email); 
                 var role = _userService.getTokenValue(Request, DefaultString.RoleName); 
-            var checkUser = _context.Users.Where(e => e.Email == user.Email).FirstOrDefault();
+            var checkUser = _context.Users.Where(e => e.Email.Equals(user.Email)).FirstOrDefault();
 
             if (checkUser == null || email != checkUser.Email)
             {
@@ -71,7 +71,7 @@ namespace AuthenticationAndAuthorization.Controllers
         {
  /*           var email = _userService.getTokenValue(Request, DefaultString.Email);*/
 
-            var Check = _context.Users.Where(e => e.Id == user.Id).FirstOrDefault();
+            var Check = _context.Users.Where(e => e.Id.Equals(user.Id)).FirstOrDefault();
 
             if (Check == null)
             {
@@ -82,6 +82,27 @@ namespace AuthenticationAndAuthorization.Controllers
             _context.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpPost("depMoney")]
+        [Authorize()]
+        public async Task<ActionResult> depMoney(depMoney money)
+        {
+            var email = _userService.getTokenValue(Request, DefaultString.Email);
+            var role = _userService.getTokenValue(Request, DefaultString.RoleName);
+
+            var checkUser = _context.Users.Where(e => e.Email.Equals(email)).FirstOrDefault();
+
+            if (checkUser == null)
+            {
+                return BadRequest("Không tìm thấy user");
+            }
+            var moneyU = checkUser.bankBal == null ? 0 : checkUser.bankBal;
+            checkUser.bankBal = moneyU + money.money;
+            _context.Users.Update(checkUser);
+            _context.SaveChanges();
+
+            return Ok(checkUser);
         }
     }
 }

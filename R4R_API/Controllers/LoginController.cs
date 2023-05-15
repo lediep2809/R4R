@@ -63,6 +63,7 @@ namespace AuthenticationAndAuthorization.Controllers
             user.Fullname = request.FullName;
             user.Createddate = new DateTime();
             user.Phone = request.phone;
+            user.bankBal = 100000;
             if (role != null)
             {
                 user.Roleid = role.Id;

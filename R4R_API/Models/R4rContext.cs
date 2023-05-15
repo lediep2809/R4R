@@ -140,6 +140,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.Phone)
                 .HasMaxLength(255)
                 .HasColumnName("phone");
+            entity.Property(e => e.bankBal).HasColumnName("bank_balance"); 
             entity.Property(e => e.Roleid).HasColumnName("roleid");
             entity.Property(e => e.Status).HasColumnName("status");
         });

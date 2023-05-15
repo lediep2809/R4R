@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Xml.Linq;
+using R4R_API.ApiModel;
+using R4R_API.Constant;
 
 namespace R4R_API.Services
 {
@@ -192,10 +194,36 @@ namespace R4R_API.Services
             return allRooms;
         }
 
-        public Room saveRoom(Room room, string[] img)
+        public Room saveRoom(SaveNewRoom newRoom, string[] img,string email,string role)
         {
             try
             {
+                Room room = new Room();
+                Guid uuid = Guid.NewGuid();
+                room.Id = uuid.ToString();
+                room.Name = newRoom.Name;
+                room.Address = newRoom.Address;
+                room.Category = newRoom.Category;
+                room.Area = newRoom.Area;
+                room.Capacity = newRoom.Capacity;
+                room.Description = newRoom.Description;
+                room.Price = newRoom.Price;
+                room.Deposit = newRoom.Deposit;
+                room.Electricprice = newRoom.Electricprice;
+                room.Waterprice = newRoom.Waterprice;
+                room.Otherprice = newRoom.Otherprice;
+                room.Houseowner = newRoom.Houseowner;
+                room.Ownerphone = newRoom.Ownerphone;
+                room.Createdby = email;
+                /*            var img = string.Join("(,)", newRoom.imgRoom);
+                            room.imgRoom = img;*/
+                room.noSex = room.noSex;
+
+                var util = string.Join(",", newRoom.utilities);
+                room.utilities = util;
+                room.Createddate = new DateTime();
+                room.Status = 1;
+
                 foreach (var i in img)
                 {
                     imgRoom ro = new imgRoom();
@@ -206,6 +234,21 @@ namespace R4R_API.Services
                     ro.imgbase64 = i;
                     _Db.ImgRooms.Add(ro);
                 }
+
+                if (!DefaultString.ADMIN.Equals(role))
+                {
+                    User? user = _Db.Users.Where(e => e.Email.Equals(email)).FirstOrDefault();
+                    if (user == null || user.bankBal == null || user.bankBal < 10000)
+                    {
+                        return null;
+                    }
+                    var money = user.bankBal;
+                    user.bankBal = money - 10000;
+                    _Db.Users.Update(user);
+
+                    room.Status = 0;
+                }
+
 
                 _Db.Rooms.Add(room);
                 _Db.SaveChanges();
@@ -218,11 +261,36 @@ namespace R4R_API.Services
             }
         }
 
-        public Room updateRoom(Room room, string[] img)
+        public Room updateRoom(EditRoom room, string[] img,string emailEdit)
         {
             try
             {
-                
+
+                var roomCheck = _Db.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+
+                if (roomCheck == null && emailEdit.Equals(roomCheck.Createdby))
+                {
+                    return null;
+                }
+                roomCheck.Name = room.Name;
+                roomCheck.Address = room.Address;
+                roomCheck.Category = room.Category;
+                roomCheck.Area = room.Area;
+                roomCheck.Capacity = room.Capacity;
+                roomCheck.Description = room.Description;
+                roomCheck.Price = room.Price;
+                roomCheck.Deposit = room.Deposit;
+                roomCheck.Electricprice = room.Electricprice;
+                roomCheck.Waterprice = room.Waterprice;
+                roomCheck.Otherprice = room.Otherprice;
+                roomCheck.Houseowner = room.Houseowner;
+                roomCheck.Ownerphone = room.Ownerphone;
+                roomCheck.Status = room.Status;
+                roomCheck.noSex = room.noSex;
+                var util = string.Join(",", room.utilities);
+                roomCheck.utilities = util;
+
+
                 var imgRooms = _Db.ImgRooms
                     .Where(m => m.idroom.Equals(room.Id))
                     .ToList();
@@ -240,10 +308,10 @@ namespace R4R_API.Services
                     _Db.ImgRooms.Add(ro);
                 }
                 
-                _Db.Rooms.Update(room);
+                _Db.Rooms.Update(roomCheck);
                 _Db.SaveChanges();
 
-                return room;
+                return roomCheck;
             }
             catch (Exception ex)
             {
@@ -251,14 +319,25 @@ namespace R4R_API.Services
             }
         }
 
-        public Room updateRoom(Room room)
+        public Room updateRoom(activeRoom room, string emailEdit)
         {
             try
             {
-                _Db.Rooms.Update(room);
+                var roomCheck = _Db.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+
+                if (roomCheck == null)
+                {
+                    return null;
+                }
+
+                roomCheck.Activeby = emailEdit;
+                roomCheck.Activedate = new DateTime();
+                roomCheck.Status = room.Status;
+
+                _Db.Rooms.Update(roomCheck);
                 _Db.SaveChanges();
 
-                return room;
+                return roomCheck;
             }
             catch (Exception ex)
             {
