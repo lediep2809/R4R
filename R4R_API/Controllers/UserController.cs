@@ -23,10 +23,11 @@ namespace AuthenticationAndAuthorization.Controllers
 
         public static User user = new User();
         private readonly IConfiguration _configuration;
-
-        public UserController(IConfiguration configuration)
+        private readonly UserService _userService;
+        public UserController(IConfiguration configuration, UserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
 
@@ -41,9 +42,11 @@ namespace AuthenticationAndAuthorization.Controllers
         [Authorize()]
         public async Task<ActionResult> editUser(editUser user)
         {
+            var email = _userService.getTokenValue(Request, DefaultString.Email); 
+                var role = _userService.getTokenValue(Request, DefaultString.RoleName); 
             var checkUser = _context.Users.Where(e => e.Email == user.Email).FirstOrDefault();
 
-            if (checkUser == null)
+            if (checkUser == null || email != checkUser.Email)
             {
                 return BadRequest("Không tìm thấy user");
             }
@@ -60,10 +63,14 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(checkUser);
         }
 
+
+
         [HttpPost("deleteUser")]
         [Authorize(Roles = DefaultString.ROLE_1)]
         public async Task<ActionResult> deleteUser(deleteUser user)
         {
+ /*           var email = _userService.getTokenValue(Request, DefaultString.Email);*/
+
             var Check = _context.Users.Where(e => e.Id == user.Id).FirstOrDefault();
 
             if (Check == null)

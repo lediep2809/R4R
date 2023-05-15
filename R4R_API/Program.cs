@@ -20,6 +20,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<R4rContext>(options =>
     options.UseNpgsql("Server=containers-us-west-12.railway.app;Database=railway;Port=7353;User Id=postgres;Password=nwQ6SIdnBq9a3XcVh7IJ"));
 builder.Services.AddScoped<RoomsService, RoomsService>();
+builder.Services.AddScoped<UserService, UserService>();
 //services cors
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

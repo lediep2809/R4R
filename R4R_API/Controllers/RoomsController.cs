@@ -110,9 +110,10 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("deleteRoom")]
-        [Authorize(Roles = DefaultString.ROLE_1)]
+        [Authorize]
         public async Task<ActionResult> deleteRoom(activeRoom room)
         {
+
             var roomCheck = _context.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
 
             if (roomCheck == null)
