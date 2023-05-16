@@ -2,7 +2,7 @@
 {
     public class Paging
     {
-  
+        public string address { get; set; }
         public string SearchQuery { get; set; }
         public string Price { get; set; }
         public string Category { get; set; }

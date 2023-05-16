@@ -61,7 +61,7 @@ namespace AuthenticationAndAuthorization.Controllers
             user.Email = request.Email;
             user.Password = passwordHash;
             user.Fullname = request.FullName;
-            user.Createddate = new DateTime();
+            user.Createddate = DateTime.Today;
             user.Phone = request.phone;
             user.bankBal = 100000;
             if (role != null)

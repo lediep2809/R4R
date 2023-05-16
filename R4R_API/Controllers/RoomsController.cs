@@ -44,6 +44,17 @@ namespace AuthenticationAndAuthorization.Controllers
             return Ok(_roomsService.GetAll(paging));
         }
 
+        [HttpGet("getRoomById")]
+        public async Task<ActionResult> getOrderDetail(string id)
+        {
+            var alert = _roomsService.GetRoomById(id);
+            if (alert != null)
+            {
+                return Ok(alert);
+            }
+            return BadRequest("Không tìm thấy giao dịch");
+        }
+
         [HttpPost("getRoomsByUser")]
         [Authorize]
         public async Task<ActionResult> getRoomsByUser(Paging paging)

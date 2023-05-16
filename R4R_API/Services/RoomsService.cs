@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Xml.Linq;
 using R4R_API.ApiModel;
 using R4R_API.Constant;
+using System.Net;
 
 namespace R4R_API.Services
 {
@@ -32,6 +33,7 @@ namespace R4R_API.Services
             var category = paging.Category.Trim();
             var util = string.Join(",", paging.utilities);
             var utilities = util;
+            var address = paging.address.Trim();
             var noSex = paging.noSex.ToUpper().Trim();
             var status = paging.status;
             int s = 0;
@@ -64,6 +66,7 @@ namespace R4R_API.Services
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
                         && (category == "" || p.Category.Equals(category))
+                        && (address == "" || p.Address.Contains(address))
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status =="" || p.Status.Equals(s)) )
@@ -77,6 +80,7 @@ namespace R4R_API.Services
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
                         && (category == "" || p.Category.Equals(category))
+                        && (address == "" || p.Address.Contains(address))
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status == "" || p.Status.Equals(s))).Count();
@@ -91,12 +95,11 @@ namespace R4R_API.Services
                 var imgRooms = _Db.ImgRooms
                 .Where(m => m.idroom.Equals(room.Id))
                 .Select(u => u.imgbase64)
-                .ToList();
-
+                .FirstOrDefault();
+                room.imgRoom = imgRooms;
                /* string[] foos = room.imgRoom.Split("(,)");*/
 
                 string[] ulti = room.utilities.Split(",");
-                allRoom.ImgRoom = imgRooms ;
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
                 allRoom.total = total;
@@ -118,6 +121,7 @@ namespace R4R_API.Services
             var util = string.Join(",", paging.utilities);
             var utilities = util;
             var noSex = paging.noSex.ToUpper().Trim();
+            var address = paging.address.Trim();
             var status = paging.status;
             int s = 0;
 
@@ -149,6 +153,7 @@ namespace R4R_API.Services
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
                         && (category == "" || p.Category.Equals(category))
+                        && (address == "" || p.Address.Contains(address))
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status == "" || p.Status.Equals(s))
@@ -164,6 +169,7 @@ namespace R4R_API.Services
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
                         && (category == "" || p.Category.Equals(category))
+                        && (address == "" || p.Address.Contains(address))
                         && (utilities == "" || p.utilities.Contains(util))
                         && (noSex == "" || p.noSex.Contains(noSex))
                         && (status == "" || p.Status.Equals(s))
@@ -179,10 +185,8 @@ namespace R4R_API.Services
                 var imgRooms = _Db.ImgRooms
                  .Where(m => m.idroom.Equals(room.Id))
                  .Select(u => u.imgbase64)
-                 .ToList();
-
-
-                allRoom.ImgRoom = imgRooms;
+                 .FirstOrDefault();
+                room.imgRoom = imgRooms;
 
                 string[] ulti = room.utilities.Split(",");
                 allRoom.Utilities = ulti;
@@ -192,6 +196,35 @@ namespace R4R_API.Services
 
 
             return allRooms;
+        }
+
+        public getAllRoom GetRoomById(string id)
+        {
+            try
+            {
+                var room = _Db.Rooms
+                    .Where(u => u.Id.Equals(id))
+                    .FirstOrDefault();
+
+                getAllRoom allRoom = new getAllRoom();
+                allRoom.room = room;
+
+                var imgRooms = _Db.ImgRooms
+                .Where(m => m.idroom.Equals(room.Id))
+                .Select(u => u.imgbase64)
+                .FirstOrDefault();
+                room.imgRoom = imgRooms;
+
+                string[] ulti = room.utilities.Split(",");
+                allRoom.Utilities = ulti;
+
+                return allRoom;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public Room saveRoom(SaveNewRoom newRoom, string[] img,string email,string role)
@@ -221,7 +254,7 @@ namespace R4R_API.Services
 
                 var util = string.Join(",", newRoom.utilities);
                 room.utilities = util;
-                room.Createddate = new DateTime();
+                room.Createddate = DateTime.Today;
                 room.Status = 1;
 
                 foreach (var i in img)
@@ -331,7 +364,7 @@ namespace R4R_API.Services
                 }
 
                 roomCheck.Activeby = emailEdit;
-                roomCheck.Activedate = new DateTime();
+                roomCheck.Activedate = DateTime.Today;
                 roomCheck.Status = room.Status;
 
                 _Db.Rooms.Update(roomCheck);
