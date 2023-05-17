@@ -212,8 +212,8 @@ namespace R4R_API.Services
                 var imgRooms = _Db.ImgRooms
                 .Where(m => m.idroom.Equals(room.Id))
                 .Select(u => u.imgbase64)
-                .FirstOrDefault();
-                room.imgRoom = imgRooms;
+                .ToList();
+                allRoom.ImgRoom = imgRooms;
 
                 string[] ulti = room.utilities.Split(",");
                 allRoom.Utilities = ulti;
