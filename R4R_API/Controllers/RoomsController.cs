@@ -180,7 +180,7 @@ namespace AuthenticationAndAuthorization.Controllers
             var roomNew = _roomsService.saveRoom(newRoom, newRoom.imgRoom, email, role);
             if (roomNew == null)
             {
-                return BadRequest("Tạo mới phòng thất bại");
+                return BadRequest("Số dư đăng phòng không đủ");
             }
             return Ok(roomNew);
         }

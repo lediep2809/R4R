@@ -125,6 +125,7 @@ namespace AuthenticationAndAuthorization.Controllers
             _userData.Role = role != null ? role.Name : "";
             _userData.FullName = user.Fullname;
             _userData.phone = user.Phone;
+            _userData.Money = user.bankBal;
             _userData.AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return _userData;
