@@ -163,7 +163,7 @@ namespace AuthenticationAndAuthorization.Controllers
             var roomEdit = _roomsService.updateRoom(room, email);
             if (roomEdit == null)
             {
-                return BadRequest("Không tìm thấy phòng");
+                return BadRequest("Số dư đăng phòng không đủ");
             }
 
             return Ok(roomEdit);
