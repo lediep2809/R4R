@@ -188,7 +188,7 @@ namespace R4R_API.Services
                  .FirstOrDefault();
                 room.imgRoom = imgRooms;
 
-                string[] ulti = room.utilities.Split(",");
+                string[] ulti = room.utilities.Split(',');
                 allRoom.Utilities = ulti;
                 allRooms.Add(allRoom);
                 allRoom.total = total;
@@ -215,7 +215,7 @@ namespace R4R_API.Services
                 .ToList();
                 allRoom.ImgRoom = imgRooms;
 
-                string[] ulti = room.utilities.Split(",");
+                string[] ulti = room.utilities.Trim().Split(',');
                 allRoom.Utilities = ulti;
 
                 return allRoom;
@@ -252,8 +252,8 @@ namespace R4R_API.Services
                             room.imgRoom = img;*/
                 room.noSex = room.noSex;
 
-                var util = string.Join(",", newRoom.utilities);
-                room.utilities = util;
+                var util = string.Join(',', newRoom.utilities);
+                room.utilities = util.Trim();
                 room.Createddate = DateTime.Today;
                 room.Status = 1;
 
@@ -316,8 +316,8 @@ namespace R4R_API.Services
                 roomCheck.Ownerphone = room.Ownerphone;
                 roomCheck.Status = room.Status;
                 roomCheck.noSex = room.noSex;
-                var util = string.Join(",", room.utilities);
-                roomCheck.utilities = util;
+                var util = string.Join(',', room.utilities);
+                roomCheck.utilities = util.Trim();
 
 
                 var imgRooms = _Db.ImgRooms
