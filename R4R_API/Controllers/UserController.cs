@@ -60,7 +60,7 @@ namespace AuthenticationAndAuthorization.Controllers
                 return BadRequest("Không tìm thấy user");
             }
             string? passwordHash = null;
-            if (user.NewPassword != null)
+            if (!user.NewPassword.IsNullOrEmpty())
             {
                 passwordHash = BCrypt.Net.BCrypt.HashPassword(user.NewPassword);
             }
