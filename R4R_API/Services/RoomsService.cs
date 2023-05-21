@@ -295,7 +295,7 @@ namespace R4R_API.Services
             try
             {
 
-                var roomCheck = _Db.Rooms.Where(e => e.Id == room.Id).FirstOrDefault();
+                var roomCheck = _Db.Rooms.Where(e => e.Id.Equals(room.Id)).FirstOrDefault();
 
                 if (roomCheck == null && emailEdit.Equals(roomCheck.Createdby))
                 {

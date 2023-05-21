@@ -70,7 +70,7 @@ namespace AuthenticationAndAuthorization.Controllers
                 {
                     return BadRequest("Mật khẩu cũ không khớp");
                 }
-                else
+                else if(passwordHash != null)
                 {
                     checkUser.Password = passwordHash;
                 }
@@ -96,7 +96,7 @@ namespace AuthenticationAndAuthorization.Controllers
                 {
                     return BadRequest("Mật khẩu cũ không khớp");
                 }
-                else
+                else if(passwordHash != null)
                 {
                     checkUser.Password = passwordHash;
                 }
