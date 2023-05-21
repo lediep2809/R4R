@@ -41,12 +41,12 @@ namespace AuthenticationAndAuthorization.Controllers
         public async Task<ActionResult> addTenant(NewTenant tenant)
         {
             var email = _userService.getTokenValue(Request, DefaultString.Email);
-            var tenant = _tenantService.newTenant(tenant)
-            if (roomNew == null)
+            var data = _tenantService.newTenant(tenant);
+            if (data == null)
             {
                 return BadRequest("Số dư đăng phòng không đủ");
             }
-            return Ok(roomNew);
+            return Ok(data);
         }
     }
 }
