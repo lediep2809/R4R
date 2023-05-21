@@ -275,10 +275,6 @@ namespace R4R_API.Services
                     {
                         return null;
                     }
-                    var money = user.bankBal;
-                    user.bankBal = money - 10000;
-                    _Db.Users.Update(user);
-
                     room.Status = 0;
                 }
 
@@ -362,6 +358,16 @@ namespace R4R_API.Services
                 {
                     return null;
                 }
+
+                User? user = _Db.Users.Where(e => e.Email.Equals(roomCheck.Createdby)).FirstOrDefault();
+
+                if (user == null || user.bankBal == null || user.bankBal < 10000)
+                {
+                    return null;
+                }
+                var money = user.bankBal;
+                user.bankBal = money - 10000;
+                _Db.Users.Update(user);
 
                 roomCheck.Activeby = emailEdit;
                 roomCheck.Activedate = DateTime.Today;

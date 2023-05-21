@@ -25,6 +25,8 @@ public partial class R4rContext : DbContext
 
     public virtual DbSet<imgRoom> ImgRooms { get; set; }
 
+    public virtual DbSet<Tenant> Tenants { get; set; }
+
     private string host = Environment.GetEnvironmentVariable("PGHOST");
 
 
@@ -175,6 +177,30 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.imgbase64)
                 .HasColumnName("imgbase64");
         });
+
+        modelBuilder.Entity<Tenant>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Tenant_pkey");
+
+            entity.ToTable("Tenant");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.idRoom)
+                .HasColumnName("id_room");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
+            entity.Property(e => e.adress)
+                .HasMaxLength(255)
+                .HasColumnName("adress");
+            entity.Property(e => e.phone)
+                .HasMaxLength(255)
+                .HasColumnName("phone");
+            entity.Property(e => e.cartId)
+                .HasMaxLength(255)
+                .HasColumnName("cart_id");
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
