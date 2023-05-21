@@ -321,10 +321,9 @@ namespace R4R_API.Services
 
 
                 var imgRooms = _Db.ImgRooms
-                    .Where(m => m.idroom.Equals(room.Id))
-                    .ToList();
+                    .Where(m => m.idroom.Equals(room.Id));
                 _Db.ImgRooms.RemoveRange(imgRooms);
-                _Db.SaveChanges();
+                
 
                 foreach (var i in img)
                 {
