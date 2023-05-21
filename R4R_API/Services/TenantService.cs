@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using R4R_API.ApiModel;
 using R4R_API.Constant;
 using System.Net;
+using Microsoft.IdentityModel.Tokens;
 
 namespace R4R_API.Services
 {
@@ -28,7 +29,7 @@ namespace R4R_API.Services
         {
             try
             {
-                var tenantCheck = _Db.Tenants.Where(e => e.cartId.Equals(newTenant.cartId)).ToList();
+                var tenantCheck = _Db.Tenants.Where(e => e.cartId.Equals(newTenant.cartId) && e.idRoom.Equals(newTenant.idRoom)).FirstOrDefault();
 
                 if (tenantCheck != null)
                 {
@@ -54,20 +55,53 @@ namespace R4R_API.Services
             }
         }
 
-        public Tenant delTenant(string id)
+        public List<Tenant> getTenantByRoom(string idRoom,string status,string email)
         {
             try
             {
-                var tenant = _Db.Tenants.Where(e => e.Id.Equals(id)).FirstOrDefault();
+                
+                int s = 0;
+                Int32.TryParse(status, out s);
+
+                var check = _Db.Rooms.Where(e => e.Id.Equals(idRoom) && e.Createdby.Equals(email)).FirstOrDefault();
+                if (check == null)
+                {
+                    return null;
+                }
+
+                var tenant = _Db.Tenants.Where(e => e.idRoom.Equals(idRoom) 
+                && (status.IsNullOrEmpty() || e.status.Equals(s)) ).ToList();
+
+                return tenant;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public Tenant delTenant(string tenantId, string email)
+        {
+            try
+            {
+                var tenant = _Db.Tenants.Where(e => e.Id.Equals(tenantId)).FirstOrDefault();
 
                 if (tenant == null)
                 {
                     return null;
                 }
 
+                var check = _Db.Rooms.Where(e => e.Id.Equals(tenant.idRoom) && e.Createdby.Equals(email)).FirstOrDefault();
+                if (check == null)
+                {
+                    return null;
+                }
+
+
+
                 tenant.status = 0;
                 tenant.dateOut = DateTime.Today;
-                _Db.Tenants.Add(tenant);
+                _Db.Tenants.Update(tenant);
                 _Db.SaveChanges();
 
                 return tenant;
@@ -107,7 +141,54 @@ namespace R4R_API.Services
             }
         }
 
+        public Tenant update(updateTenant update, string email)
+        {
+            try
+            {
+                var tenant = _Db.Tenants.Where(e => e.Id.Equals(update.idTenant)).FirstOrDefault();
 
+                if (tenant == null)
+                {
+                    return null;
+                }
+
+                var check = _Db.Rooms.Where(e => e.Id.Equals(tenant.idRoom) && e.Createdby.Equals(email)).FirstOrDefault();
+                if (check == null)
+                {
+                    return null;
+                }
+
+
+
+                tenant.Name = update.Name;
+                tenant.adress = update.adress;
+                tenant.cartId = update.cartId;
+                tenant.phone = update.phone;
+
+                if (!tenant.status.Equals(update.status))
+                {
+                    if (update.status.Equals(0))
+                    {
+                        tenant.dateOut = DateTime.Today;
+                        tenant.status = update.status;
+                    }
+                    if (update.status.Equals(1))
+                    {
+                        tenant.dateJoin = DateTime.Today;
+                        tenant.status = update.status;
+                    }
+                }
+                
+                _Db.Tenants.Update(tenant);
+                _Db.SaveChanges();
+
+                return tenant;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
 }

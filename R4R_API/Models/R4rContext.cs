@@ -199,6 +199,13 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.cartId)
                 .HasMaxLength(255)
                 .HasColumnName("cart_id");
+            entity.Property(e => e.dateJoin)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("date_join");
+            entity.Property(e => e.dateOut)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("date_out");
+            entity.Property(e => e.status).HasColumnName("status");
         });
 
         OnModelCreatingPartial(modelBuilder);
