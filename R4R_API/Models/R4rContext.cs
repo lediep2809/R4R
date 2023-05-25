@@ -233,7 +233,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasColumnName("no_electic");
             entity.Property(e => e.Created)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("date_out");
+                .HasColumnName("created");
             entity.Property(e => e.otherPrice).HasColumnName("otherprice");
             entity.Property(e => e.status).HasColumnName("status");
 

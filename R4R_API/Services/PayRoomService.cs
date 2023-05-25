@@ -63,7 +63,10 @@ namespace R4R_API.Services
                 && e.Month.Equals(newPay.Month)
                 && e.status.Equals(1)).FirstOrDefault();
 
-                if (Check != null || newPay.Month <= DateTime.Today.Month)
+                var checkCartid = _Db.Tenants.Where(e => e.cartId.Equals(newPay.CartId) 
+                && e.idRoom.Equals(newPay.IdRoom)).FirstOrDefault();
+
+                if (Check != null || newPay.Month > DateTime.Today.Month || checkCartid == null)
                 {
                     return null;
                 }
@@ -80,6 +83,7 @@ namespace R4R_API.Services
 
                 PayRoom pay = new PayRoom();
                 pay.Id = Guid.NewGuid().ToString();
+                pay.IdRoom= newPay.IdRoom;
                 pay.Month = newPay.Month;
                 pay.NoWater = newPay.NoWater;
                 pay.NoElectic= newPay.NoElectic;
