@@ -64,7 +64,7 @@ namespace AuthenticationAndAuthorization.Controllers
 
         [HttpPost("updatePayRoom")]
         [Authorize]
-        public async Task<ActionResult> updatePayRoom(NewPayMonth update)
+        public async Task<ActionResult> updatePayRoom(updatePay update)
         {
             var email = _userService.getTokenValue(Request, DefaultString.Email);
             var data = _payRoomService.updateMonth(update, email);
