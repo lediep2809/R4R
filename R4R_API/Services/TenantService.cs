@@ -25,10 +25,18 @@ namespace R4R_API.Services
             _Db = Db;
         }
 
-        public NewTenant newTenant(NewTenant newTenant)
+        public NewTenant newTenant(NewTenant newTenant, string email)
         {
             try
             {
+                var CheckRoom = _Db.Rooms.Where(e => e.Id.Equals(newTenant.idRoom) && e.Createdby.Equals(email)).FirstOrDefault();
+
+                if (CheckRoom == null)
+                {
+                    return null;
+                }
+
+
                 var tenantCheck = _Db.Tenants.Where(e => e.cartId.Equals(newTenant.cartId) && e.idRoom.Equals(newTenant.idRoom)).FirstOrDefault();
 
                 if (tenantCheck != null)
@@ -45,6 +53,9 @@ namespace R4R_API.Services
                 tenant.idRoom = newTenant.idRoom;
                 tenant.dateJoin = DateTime.Today;
                 tenant.status = 1;
+
+                CheckRoom.Status =3;
+                _Db.Rooms.Update(CheckRoom);
                 _Db.Tenants.Add(tenant);
                 _Db.SaveChanges();
 
@@ -98,10 +109,17 @@ namespace R4R_API.Services
                 }
 
 
-
                 tenant.status = 0;
                 tenant.dateOut = DateTime.Today;
                 _Db.Tenants.Update(tenant);
+                _Db.SaveChanges();
+
+                var countT = _Db.Tenants.Where(e => e.idRoom.Equals(check.imgRoom) && e.status.Equals(1) ).Count();
+
+                if(countT == 0) {
+                    check.Status = 1;
+                }
+                _Db.Rooms.Update(check);
                 _Db.SaveChanges();
 
                 return tenant;
@@ -171,16 +189,33 @@ namespace R4R_API.Services
                     {
                         tenant.dateOut = DateTime.Today;
                         tenant.status = update.status;
+                        _Db.Tenants.Update(tenant);
+                        _Db.SaveChanges();
+                        var countT = _Db.Tenants.Where(e => e.idRoom.Equals(check.imgRoom) && e.status.Equals(1)).Count();
+
+                        if (countT == 0)
+                        {
+                            check.Status = 1;
+                        }
+                        _Db.Rooms.Update(check);
+                        _Db.SaveChanges();
                     }
                     if (update.status.Equals(1))
                     {
                         tenant.dateJoin = DateTime.Today;
                         tenant.status = update.status;
+                        _Db.Tenants.Update(tenant);
+
+                        check.Status = 3;
+                        _Db.Rooms.Update(check);
+
+                        _Db.SaveChanges();
+
+
                     }
                 }
                 
-                _Db.Tenants.Update(tenant);
-                _Db.SaveChanges();
+               
 
                 return tenant;
             }

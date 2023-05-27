@@ -37,11 +37,11 @@ namespace AuthenticationAndAuthorization.Controllers
         }
 
         [HttpPost("addTenant")]
-        [Authorize(Roles = DefaultString.ROLE_2)]
+        [Authorize]
         public async Task<ActionResult> addTenant(NewTenant tenant)
         {
             var email = _userService.getTokenValue(Request, DefaultString.Email);
-            var data = _tenantService.newTenant(tenant);
+            var data = _tenantService.newTenant(tenant, email);
             if (data == null)
             {
                 return BadRequest("Thêm người thất bại");
