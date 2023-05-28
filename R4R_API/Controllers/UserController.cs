@@ -147,10 +147,37 @@ namespace AuthenticationAndAuthorization.Controllers
             }
             var moneyU = checkUser.bankBal == null ? 0 : checkUser.bankBal;
             checkUser.bankBal = moneyU + money.money;
+            hisRecharge his = new hisRecharge();
+            his.Id = Guid.NewGuid().ToString();
+            his.userEmail = email;
+            his.moneyRecharge = money.money;
+            his.createDate = DateTime.Today;
+            his.note = "Nạp tiền";
+
+            _context.HisRecharges.Add(his);
             _context.Users.Update(checkUser);
             _context.SaveChanges();
 
             return Ok(checkUser);
         }
+
+        [HttpPost("hisMoney")]
+        [Authorize()]
+        public async Task<ActionResult> hisMoney()
+        {
+            var email = _userService.getTokenValue(Request, DefaultString.Email);
+
+            var checkUser = _context.Users.Where(e => e.Email.Equals(email)).FirstOrDefault();
+
+            if (checkUser == null)
+            {
+                return BadRequest("Không tìm thấy user");
+            }
+
+            var his = _context.HisRecharges.Where(e => e.userEmail.Equals(email)).ToList();
+
+            return Ok(his);
+        }
+
     }
 }

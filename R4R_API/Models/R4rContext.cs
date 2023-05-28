@@ -29,6 +29,8 @@ public partial class R4rContext : DbContext
 
     public virtual DbSet<PayRoom> PayRooms { get; set; }
 
+    public virtual DbSet<hisRecharge> HisRecharges { get; set; }
+
     private string host = Environment.GetEnvironmentVariable("PGHOST");
 
 
@@ -210,33 +212,22 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.status).HasColumnName("status");
         });
 
-        modelBuilder.Entity<PayRoom>(entity =>
+        modelBuilder.Entity<hisRecharge>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("pay_room_pkey");
+            entity.HasKey(e => e.Id).HasName("his_recharge_pkey");
 
-            entity.ToTable("pay_room");
+            entity.ToTable("his_recharge");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CartId)
-                .HasColumnName("cart_id");
-            entity.Property(e => e.IdRoom)
-                .HasColumnName("id_room");
-            entity.Property(e => e.Month)
-                .HasColumnName("month");
-            entity.Property(e => e.NoWater)
-                .HasColumnName("no_water");
-            entity.Property(e => e.RoomPrice)
-                .HasColumnName("room_price");
+            entity.Property(e => e.userEmail)
+                .HasColumnName("user_email");
+            entity.Property(e => e.moneyRecharge)
+                .HasColumnName("money_recharge");
             entity.Property(e => e.note)
                 .HasColumnName("note");
-            entity.Property(e => e.NoElectic)
-                .HasColumnName("no_electic");
-            entity.Property(e => e.Created)
+            entity.Property(e => e.createDate)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("created");
-            entity.Property(e => e.otherPrice).HasColumnName("otherprice");
-            entity.Property(e => e.status).HasColumnName("status");
-
+                .HasColumnName("date_create");
         });
 
         OnModelCreatingPartial(modelBuilder);

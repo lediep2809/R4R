@@ -372,6 +372,15 @@ namespace R4R_API.Services
                 roomCheck.Activedate = DateTime.Today;
                 roomCheck.Status = room.Status;
 
+                hisRecharge his = new hisRecharge();
+                his.Id = Guid.NewGuid().ToString();
+                his.userEmail = user.Email;
+                his.moneyRecharge = -10000;
+                his.createDate = DateTime.Today;
+                his.note = "Admin trừ tiền duyệt phòng";
+
+                _Db.HisRecharges.Add(his);
+
                 _Db.Rooms.Update(roomCheck);
                 _Db.SaveChanges();
 
