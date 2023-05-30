@@ -23,23 +23,27 @@ namespace R4R_API.Services
                 var countActive=0;
                 var countInActive=0;
                 var count=0;
+                var countCancel = 0;
                 if (role.Equals(DefaultString.ROLE_1))
                 {
                      countActive = countRoom(1);
                      countInActive = countRoom(0);
                      count = countRoom(3);
+                    countCancel = countRoom(-1);
                 }
                 else
                 {
                     countActive = countUser(1,email);
                     countInActive = countUser(0, email);
                     count = countUser(3, email);
+                    countCancel = countUser(-1, email);
                 }
                 
 
                 capitalCities.Add("roomActive",countActive);
                 capitalCities.Add("roomInActive", countInActive);
                 capitalCities.Add("roomTenant", count);
+                capitalCities.Add("roomCancel", countCancel);
                 return capitalCities;
             }
             catch (Exception ex) {
