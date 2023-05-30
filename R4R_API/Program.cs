@@ -23,6 +23,7 @@ builder.Services.AddScoped<RoomsService, RoomsService>();
 builder.Services.AddScoped<UserService, UserService>();
 builder.Services.AddScoped<TenantService, TenantService>();
 builder.Services.AddScoped<PayRoomService, PayRoomService>();
+builder.Services.AddScoped<CharServices, CharServices>();
 //services cors
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
