@@ -230,6 +230,33 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasColumnName("date_create");
         });
 
+        modelBuilder.Entity<PayRoom>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("pay_room_pkey");
+            entity.ToTable("pay_room");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CartId)
+                .HasColumnName("cart_id");
+            entity.Property(e => e.IdRoom)
+                .HasColumnName("id_room");
+            entity.Property(e => e.Month)
+                .HasColumnName("month");
+            entity.Property(e => e.NoWater)
+                .HasColumnName("no_water");
+            entity.Property(e => e.RoomPrice)
+                .HasColumnName("room_price");
+            entity.Property(e => e.note)
+                .HasColumnName("note");
+            entity.Property(e => e.NoElectic)
+                .HasColumnName("no_electic");
+            entity.Property(e => e.Created)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created");
+            entity.Property(e => e.otherPrice).HasColumnName("otherprice");
+            entity.Property(e => e.status).HasColumnName("status");
+        });
+
+
         OnModelCreatingPartial(modelBuilder);
     }
 

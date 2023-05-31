@@ -60,5 +60,13 @@ namespace R4R_API.Services
         {
             return _Db.Rooms.Where(e => e.Status.Equals(status) && e.Createdby.Equals(email)).Count();
         }
+
+
+        public Dictionary<string, int> getChartMonth(string email, string role)
+        {
+
+
+            return new Dictionary<string, int>(); ;
+        }
     }
 }
