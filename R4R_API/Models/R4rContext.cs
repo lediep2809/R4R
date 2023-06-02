@@ -242,6 +242,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasColumnName("id_room");
             entity.Property(e => e.Month)
                 .HasColumnName("month");
+            entity.Property(e => e.Year)
+                .HasColumnName("Year");
             entity.Property(e => e.NoWater)
                 .HasColumnName("no_water");
             entity.Property(e => e.RoomPrice)
@@ -253,6 +255,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.Property(e => e.Created)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created");
+            entity.Property(e => e.datePay)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("date_pay");
             entity.Property(e => e.otherPrice).HasColumnName("otherprice");
             entity.Property(e => e.status).HasColumnName("status");
         });

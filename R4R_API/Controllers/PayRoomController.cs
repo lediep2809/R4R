@@ -44,7 +44,7 @@ namespace AuthenticationAndAuthorization.Controllers
             var data = _payRoomService.NewPayMonth(newpay,email);
             if (data == null)
             {
-                return BadRequest("thất bại");
+                return BadRequest("Đã thanh toán rồi");
             }
             return Ok(data);
         }

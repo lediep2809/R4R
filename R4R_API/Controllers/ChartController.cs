@@ -54,5 +54,14 @@ namespace AuthenticationAndAuthorization.Controllers
         {
             return Ok(_charServices.randomAdress());
         }
+
+        [HttpGet("GetChartMoney")]
+        [Authorize]
+        public async Task<ActionResult> GetChartMoney(int nam)
+        {
+            var email = _userService.getTokenValue(Request, DefaultString.Email);
+            var role = _userService.getTokenValue(Request, DefaultString.RoleName);
+            return Ok(_charServices.getChartMonth(email, role, nam));
+        }
     }
 }

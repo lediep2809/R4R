@@ -58,15 +58,15 @@ namespace R4R_API.Services
                 {
                     return null;
                 }
-
+                DateTime dateTime = new DateTime(newPay.Year == 0? DateTime.Today.Year : newPay.Year, newPay.Month,1);
                 var Check = _Db.PayRooms.Where(e => e.IdRoom.Equals(newPay.IdRoom) 
-                && e.Month.Equals(newPay.Month)
+                && e.datePay.Equals(dateTime)
                 && e.status.Equals(1)).FirstOrDefault();
 
                 var checkCartid = _Db.Tenants.Where(e => e.cartId.Equals(newPay.CartId) 
                 && e.idRoom.Equals(newPay.IdRoom)).FirstOrDefault();
 
-                if (Check != null || newPay.Month > DateTime.Today.Month || checkCartid == null)
+                if (Check != null || checkCartid == null)
                 {
                     return null;
                 }
@@ -85,6 +85,7 @@ namespace R4R_API.Services
                 pay.Id = Guid.NewGuid().ToString();
                 pay.IdRoom= newPay.IdRoom;
                 pay.Month = newPay.Month;
+                pay.Year = newPay.Year;
                 pay.NoWater = newPay.NoWater;
                 pay.NoElectic= newPay.NoElectic;
                 pay.otherPrice = ortherPrice;
@@ -93,7 +94,7 @@ namespace R4R_API.Services
                 pay.CartId = newPay.CartId;
                 pay.Created = DateTime.Today;
                 pay.status = newPay.status ;
-
+                pay.datePay = dateTime;
                 _Db.PayRooms.Add(pay);
                 _Db.SaveChanges();
 

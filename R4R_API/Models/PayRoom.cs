@@ -7,7 +7,8 @@
 
         public string? IdRoom { get; set; } 
         public string? CartId { get; set; } 
-        public int? Month { get; set; } 
+        public int? Month { get; set; }
+        public int? Year { get; set; }
         public int? NoWater { get; set; } 
 
         public int? NoElectic { get; set; } 
@@ -16,5 +17,7 @@
         public string? note { get; set; }
         public int? status { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? datePay { get; set; }
+        
     }
 }
