@@ -143,11 +143,11 @@ namespace R4R_API.Services
 
         public List<string> randomAdress()
         {
-            var address = _Db.Rooms.OrderByDescending(e => e.view).Take(5)
+            var address = _Db.Rooms.OrderByDescending(e => e.view).Take(10)
                 .Select(e => e.Address).ToList();
             List<string> result = new List<string>();
             foreach(var i in address){
-                if (i != null)
+                if (i != null && getMatch(i) != "" && result.Count()<=5 )
                 {
                     result.Add(getMatch(i));
                 }
@@ -157,7 +157,7 @@ namespace R4R_API.Services
 
         public string getMatch(string i)
         {
-            Regex filter = new Regex("(Quận).+,?");
+            Regex filter = new Regex("(Quận).+,");
             var match = filter.Match(i.ToString());
             if (match.Success)
             {
