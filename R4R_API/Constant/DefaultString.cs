@@ -9,6 +9,7 @@
         public const string RoleName = "RoleName";
         public const string ADMIN = "ADMIN";
         public const string USER = "USER";
+        public const string ADMIN_CODE = "1";
         public class ERROR_STRING
         {
             public const string DUP_EMAIL = "email đã tồn tại";

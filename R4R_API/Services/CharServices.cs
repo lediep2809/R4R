@@ -68,5 +68,12 @@ namespace R4R_API.Services
 
             return new Dictionary<string, int>(); ;
         }
+
+        public List<string> randomAdress()
+        {
+            var address = _Db.Rooms.OrderByDescending(e => e.view).Take(5)
+                .Select(e => e.Address).ToList();
+            return address;
+        }
     }
 }

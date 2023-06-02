@@ -48,4 +48,6 @@ public partial class Room
     public DateTime? Activedate { get; set; }
 
     public int? Status { get; set; }
+
+    public int? view { get; set; }
 }

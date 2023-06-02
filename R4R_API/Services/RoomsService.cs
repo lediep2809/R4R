@@ -218,6 +218,10 @@ namespace R4R_API.Services
                 string[] ulti = room.utilities.Trim().Split(',');
                 allRoom.Utilities = ulti;
 
+                room.view = room.view + 1;
+
+                _Db.Rooms.Update(room);
+                _Db.SaveChanges();
                 return allRoom;
 
             }
@@ -378,6 +382,23 @@ namespace R4R_API.Services
                 his.moneyRecharge = -10000;
                 his.createDate = DateTime.Today;
                 his.note = "Admin trừ tiền duyệt phòng";
+
+                User? userAdmin = _Db.Users.Where(e => e.Roleid.Equals(DefaultString.ADMIN_CODE)).FirstOrDefault();
+
+                if (userAdmin != null)
+                {
+                    userAdmin.bankBal = userAdmin.bankBal + 10000;
+                    _Db.Users.Update(userAdmin);
+
+                    hisRecharge hisAdmin = new hisRecharge();
+                    hisAdmin.Id = Guid.NewGuid().ToString();
+                    hisAdmin.userEmail = user.Email;
+                    hisAdmin.moneyRecharge = 10000;
+                    hisAdmin.createDate = DateTime.Today;
+                    hisAdmin.note = "Admin cộng tiền duyệt phòng";
+                }
+
+
 
                 _Db.HisRecharges.Add(his);
 

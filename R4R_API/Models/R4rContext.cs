@@ -120,6 +120,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .HasMaxLength(255)
                 .HasColumnName("utilities");
             entity.Property(e => e.imgRoom).HasColumnName("imgroom");
+            entity.Property(e => e.view).HasColumnName("view");
         });
 
         modelBuilder.Entity<User>(entity =>

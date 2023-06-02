@@ -48,7 +48,11 @@ namespace AuthenticationAndAuthorization.Controllers
             var role = _userService.getTokenValue(Request, DefaultString.RoleName);
             return Ok(_charServices.getchartRoom(email, role));
         }
-   
 
+        [HttpGet("getRandomAdr")]
+        public async Task<ActionResult> random()
+        {
+            return Ok(_charServices.randomAdress());
+        }
     }
 }
