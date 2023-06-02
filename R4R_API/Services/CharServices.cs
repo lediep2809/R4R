@@ -26,7 +26,7 @@ namespace R4R_API.Services
                 var countInActive=0;
                 var count=0;
                 var countCancel = 0;
-                if (role.Equals(DefaultString.ROLE_1))
+                if (role.Equals(DefaultString.ADMIN))
                 {
                      countActive = countRoom(1);
                      countInActive = countRoom(0);
@@ -72,7 +72,7 @@ namespace R4R_API.Services
             var quy2 = 0;
             var quy3 = 0;
             var quy4 = 0;
-            if (!role.Equals(DefaultString.ROLE_1))
+            if (!role.Equals(DefaultString.ADMIN))
             {
                 quy1 = getMoneyMonth(email,1, nam);
                 quy2 = getMoneyMonth(email,2, nam);
