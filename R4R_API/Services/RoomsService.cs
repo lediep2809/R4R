@@ -401,7 +401,7 @@ namespace R4R_API.Services
 
 
                 _Db.HisRecharges.Add(his);
-
+                _Db.HisRecharges.Add(hisAdmin);
                 _Db.Rooms.Update(roomCheck);
                 _Db.SaveChanges();
 
