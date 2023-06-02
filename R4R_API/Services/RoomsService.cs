@@ -396,12 +396,12 @@ namespace R4R_API.Services
                     hisAdmin.moneyRecharge = 10000;
                     hisAdmin.createDate = DateTime.Today;
                     hisAdmin.note = "Admin cộng tiền duyệt phòng";
+                    _Db.HisRecharges.Add(hisAdmin);
                 }
 
 
 
                 _Db.HisRecharges.Add(his);
-                _Db.HisRecharges.Add(hisAdmin);
                 _Db.Rooms.Update(roomCheck);
                 _Db.SaveChanges();
 
