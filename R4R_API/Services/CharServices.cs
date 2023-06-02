@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.RegularExpressions;
 
 namespace R4R_API.Services
 {
@@ -76,7 +77,7 @@ namespace R4R_API.Services
                 quy1 = getMoneyMonth(email,1, nam);
                 quy2 = getMoneyMonth(email,2, nam);
                 quy3 = getMoneyMonth(email,3, nam);
-                quy4 = getMoneyMonth(email,4, nam);
+                quy4 = getMoneyMonth(email,4,nam);
             }
 
             capitalCities.Add("Quý 1", quy1);
@@ -144,7 +145,22 @@ namespace R4R_API.Services
         {
             var address = _Db.Rooms.OrderByDescending(e => e.view).Take(5)
                 .Select(e => e.Address).ToList();
+            foreach(var i in address){
+
+            }
             return address;
         }
+
+        public string getMatch(string i)
+        {
+            Regex filter = new Regex("Quận....,$");
+            var match = filter.Match(i.ToString());
+            if (match.Success)
+            {
+                return match.Value;
+            }
+            return "";
+        }
+
     }
 }

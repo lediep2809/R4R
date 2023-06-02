@@ -392,7 +392,7 @@ namespace R4R_API.Services
 
                     hisRecharge hisAdmin = new hisRecharge();
                     hisAdmin.Id = Guid.NewGuid().ToString();
-                    hisAdmin.userEmail = user.Email;
+                    hisAdmin.userEmail = userAdmin.Email;
                     hisAdmin.moneyRecharge = 10000;
                     hisAdmin.createDate = DateTime.Today;
                     hisAdmin.note = "Admin cộng tiền duyệt phòng";
