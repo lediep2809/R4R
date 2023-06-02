@@ -145,15 +145,19 @@ namespace R4R_API.Services
         {
             var address = _Db.Rooms.OrderByDescending(e => e.view).Take(5)
                 .Select(e => e.Address).ToList();
+            List<string> result = new List<string>();
             foreach(var i in address){
-
+                if (i != null)
+                {
+                    result.Add(getMatch(i));
+                }
             }
-            return address;
+            return result;
         }
 
         public string getMatch(string i)
         {
-            Regex filter = new Regex("Quận....,$");
+            Regex filter = new Regex("(Quận).+,?");
             var match = filter.Match(i.ToString());
             if (match.Success)
             {
