@@ -148,7 +148,7 @@ namespace R4R_API.Services
             }
 
             var test = _Db.Rooms
-                    .FromSqlRaw($"select * from room as u where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
+                    .FromSqlRaw($"select u from room as u join tenant b on a.id = b.id_room where ( '{price}' = '' or TO_NUMBER(u.price,'9999999999') between '{to}' and '{from}')")
                     .Where(p => (p.Name.ToUpper().Trim().Contains(search)
                         || p.Address.ToUpper().Trim().Contains(search)
                         || p.Area.ToUpper().Trim().Contains(search))
@@ -217,8 +217,8 @@ namespace R4R_API.Services
 
                 string[] ulti = room.utilities.Trim().Split(',');
                 allRoom.Utilities = ulti;
-
-                room.view = room.view + 1;
+                int? view = room.view == null ? 0 : room.view;
+                room.view = view + 1;
 
                 _Db.Rooms.Update(room);
                 _Db.SaveChanges();
