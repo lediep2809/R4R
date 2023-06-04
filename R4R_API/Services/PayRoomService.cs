@@ -131,9 +131,9 @@ namespace R4R_API.Services
                 int priceElec = 0;
 
                 Int32.TryParse(CheckRoom.Otherprice, out ortherPrice);
-                Int32.TryParse(CheckRoom.Otherprice, out priceWater);
-                Int32.TryParse(CheckRoom.Otherprice, out price);
-                Int32.TryParse(CheckRoom.Otherprice, out priceElec);
+                Int32.TryParse(CheckRoom.Waterprice, out priceWater);
+                Int32.TryParse(CheckRoom.Price, out price);
+                Int32.TryParse(CheckRoom.Electricprice, out priceElec);
 
                 pay.NoWater = newPay.NoWater;
                 pay.NoElectic = newPay.NoElectic;
@@ -144,7 +144,7 @@ namespace R4R_API.Services
                 pay.Created = DateTime.Today;
                 pay.status = newPay.status;
 
-                _Db.PayRooms.Add(pay);
+                _Db.PayRooms.Update(pay);
                 _Db.SaveChanges();
 
                 return pay;
