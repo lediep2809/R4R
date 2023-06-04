@@ -65,7 +65,7 @@ namespace R4R_API.Services
                 DateTime dateTime = new DateTime(newPay.Year == 0? DateTime.Today.Year : newPay.Year, newPay.Month,1);
                 var Check = _Db.PayRooms.Where(e => e.IdRoom.Equals(newPay.IdRoom) 
                 && e.datePay.Equals(dateTime)
-                && e.status.Equals(1)).FirstOrDefault();
+                ).FirstOrDefault();
 
                 var checkCartid = _Db.Tenants.Where(e => e.cartId.Equals(newPay.CartId) 
                 && e.idRoom.Equals(newPay.IdRoom)).FirstOrDefault();
