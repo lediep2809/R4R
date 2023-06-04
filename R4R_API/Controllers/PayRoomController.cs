@@ -51,10 +51,10 @@ namespace AuthenticationAndAuthorization.Controllers
 
         [HttpGet("getPayMonthRoom")]
         [Authorize]
-        public async Task<ActionResult> getPayMonthRoom(string idRoom)
+        public async Task<ActionResult> getPayMonthRoom(string idRoom, string? search)
         {
             var email = _userService.getTokenValue(Request, DefaultString.Email);
-            var data = _payRoomService.getPayRoom(idRoom, email);
+            var data = _payRoomService.getPayRoom(idRoom, email, search);
             if (data == null)
             {
                 return BadRequest("Bạn không có quyền xem");

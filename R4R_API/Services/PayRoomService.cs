@@ -12,6 +12,7 @@ using R4R_API.ApiModel;
 using R4R_API.Constant;
 using System.Net;
 using AuthenticationAndAuthorization.Controllers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace R4R_API.Services
 {
@@ -25,10 +26,12 @@ namespace R4R_API.Services
             _Db = Db;
         }
 
-        public List<PayRoom> getPayRoom(string idRoom , string email)
+        public List<PayRoom> getPayRoom(string idRoom , string email,string search)
         {
             try
             {
+                
+
                 var CheckRoom = _Db.Rooms.Where(e => e.Id.Equals(idRoom) && e.Createdby.Equals(email)).FirstOrDefault();
 
                 if (CheckRoom == null)
@@ -36,7 +39,8 @@ namespace R4R_API.Services
                     return null;
                 }
 
-                var Check = _Db.PayRooms.Where(e => e.IdRoom.Equals(idRoom))
+                var Check = _Db.PayRooms.Where(e => e.IdRoom.Equals(idRoom)
+                && (search.IsNullOrEmpty() || search.Equals(e.CartId)) )
                     .OrderByDescending(e=>e.Created).ToList();
 
                
