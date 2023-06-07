@@ -189,8 +189,7 @@ namespace R4R_API.Services
                     {
                         tenant.dateOut = DateTime.Today;
                         tenant.status = update.status;
-                        _Db.Tenants.Update(tenant);
-                        _Db.SaveChanges();
+
                         var countT = _Db.Tenants.Where(e => e.idRoom.Equals(check.imgRoom) && e.status.Equals(1)).Count();
 
                         if (countT == 0)
@@ -203,8 +202,6 @@ namespace R4R_API.Services
                     if (update.status.Equals(1))
                     {
                         tenant.dateJoin = DateTime.Today;
-                        tenant.status = update.status;
-                        _Db.Tenants.Update(tenant);
 
                         check.Status = 3;
                         _Db.Rooms.Update(check);
@@ -214,8 +211,9 @@ namespace R4R_API.Services
 
                     }
                 }
-                
-               
+
+                _Db.Tenants.Update(tenant);
+                _Db.SaveChanges();
 
                 return tenant;
             }
