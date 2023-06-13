@@ -72,15 +72,14 @@ namespace R4R_API.Services
             var quy2 = 0;
             var quy3 = 0;
             var quy4 = 0;
-            if (!role.Equals(DefaultString.ADMIN))
-            {
-                quy1 = getMoneyMonth(email,1, nam);
-                quy2 = getMoneyMonth(email,2, nam);
-                quy3 = getMoneyMonth(email,3, nam);
-                quy4 = getMoneyMonth(email,4,nam);
-            }
+            
+            quy1 = getMoneyMonth(email,1, nam, role);
+            quy2 = getMoneyMonth(email,2, nam, role);
+            quy3 = getMoneyMonth(email,3, nam, role);
+            quy4 = getMoneyMonth(email,4,nam, role);
 
-            capitalCities.Add("Quý 1", quy1);
+
+                capitalCities.Add("Quý 1", quy1);
             capitalCities.Add("Quý 2", quy2);
             capitalCities.Add("Quý 3", quy3);
             capitalCities.Add("Quý 4", quy4);
@@ -88,7 +87,7 @@ namespace R4R_API.Services
             return capitalCities;
         }
 
-        public int getMoneyMonth(string email,int quy,int nam)
+        public int getMoneyMonth(string email,int quy,int nam,string role)
         {
             try
             {
@@ -131,7 +130,24 @@ namespace R4R_API.Services
 
                 var val = monet.Sum(e => e.roomPrice);
 
-                return (int)(val == null ? 0 : val);
+                int moneyActive = 0;
+                if (role.Equals(DefaultString.ADMIN))
+                {
+                    var depMoney = from a in _Db.HisRecharges.ToList()
+                                   where email.Equals(a.userEmail) &&
+                                   (a.createDate >= start && a.createDate <= end)
+                                   select new
+                                   {
+                                       datePay = a.createDate,
+                                       money = a.moneyRecharge == null ? 0 : a.moneyRecharge,
+                                   };
+                    if(depMoney != null)
+                    {
+                        moneyActive = (int)depMoney.Sum(e => e.money);
+                    }
+                }
+
+                return (int)(val == null  ? 0 : val + moneyActive);
             } catch (Exception ex)
             {
                 return 0;
