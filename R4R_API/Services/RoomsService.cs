@@ -364,12 +364,12 @@ namespace R4R_API.Services
 
                 User? user = _Db.Users.Where(e => e.Email.Equals(roomCheck.Createdby)).FirstOrDefault();
 
-                if (user == null || user.bankBal == null || user.bankBal < 10000)
+                if (user == null || user.bankBal == null || user.bankBal < 100000)
                 {
                     return null;
                 }
                 var money = user.bankBal;
-                user.bankBal = money - 10000;
+                user.bankBal = money - 100000;
                 _Db.Users.Update(user);
 
                 roomCheck.Activeby = emailEdit;
@@ -379,7 +379,7 @@ namespace R4R_API.Services
                 hisRecharge his = new hisRecharge();
                 his.Id = Guid.NewGuid().ToString();
                 his.userEmail = user.Email;
-                his.moneyRecharge = -10000;
+                his.moneyRecharge = -100000;
                 his.createDate = DateTime.Today;
                 his.note = "Admin trừ tiền duyệt phòng";
 
@@ -387,13 +387,13 @@ namespace R4R_API.Services
 
                 if (userAdmin != null)
                 {
-                    userAdmin.bankBal = userAdmin.bankBal + 10000;
+                    userAdmin.bankBal = userAdmin.bankBal + 100000;
                     _Db.Users.Update(userAdmin);
 
                     hisRecharge hisAdmin = new hisRecharge();
                     hisAdmin.Id = Guid.NewGuid().ToString();
                     hisAdmin.userEmail = userAdmin.Email;
-                    hisAdmin.moneyRecharge = 10000;
+                    hisAdmin.moneyRecharge = 100000;
                     hisAdmin.createDate = DateTime.Today;
                     hisAdmin.note = "Admin cộng tiền duyệt phòng";
                     _Db.HisRecharges.Add(hisAdmin);
