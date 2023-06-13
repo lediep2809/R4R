@@ -97,22 +97,22 @@ namespace R4R_API.Services
                 if (1 == quy)
                 {
                     start = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 1, 1);
-                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 3, 25);
+                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 3, 30);
                 }
                 else if (2 == quy)
                 {
                     start = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 4, 1);
-                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 6, 25);
+                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 6, 30);
                 }
                 else if (3 == quy)
                 {
                     start = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 7, 1);
-                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 9, 25);
+                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 9, 30);
                 }
                 else if (4 == quy)
                 {
                     start = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 10, 1);
-                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 12, 25);
+                    end = new DateTime(nam == 0 ? DateTime.Today.Year : nam, 12, 30);
                 }
 
 
@@ -141,10 +141,10 @@ namespace R4R_API.Services
                                        datePay = a.createDate,
                                        money = a.moneyRecharge == null ? 0 : a.moneyRecharge,
                                    };
-                    if(depMoney != null)
-                    {
+                    
+                    
                         moneyActive = (int)depMoney.Sum(e => e.money);
-                    }
+                    
                 }
 
                 return (int)(val == null  ? 0 : val + moneyActive);
